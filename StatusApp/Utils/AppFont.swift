@@ -12,6 +12,10 @@ enum AppFont {
         return UIFont(name: name, size: size)!
     }
 
+    static var appName: UIFont {
+        return custom("AvenirNextCyr-Bold", size: Constants.appNameSize)
+    }
+
     static var title: UIFont {
         return custom("AvenirNextCyr-Bold", size: Constants.titleSize)
     }

@@ -17,6 +17,8 @@ struct Constants {
     static let buttonTextSize: CGFloat = 18
     static let titleSize: CGFloat = 26
     
+    static let appNameSize: CGFloat = 50
+    
     static let primaryTextSize: CGFloat = 17
     static let descriptionTextSize: CGFloat = 15
     

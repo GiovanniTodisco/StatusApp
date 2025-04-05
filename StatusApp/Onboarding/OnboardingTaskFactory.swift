@@ -16,28 +16,25 @@ struct OnboardingTaskFactory {
         
         // Step 1: Introduzione
         let introStep = ORKInstructionStep(identifier: OnboardingConstants.introStep)
-        introStep.title = "Benvenuto in StatusApp"
-        introStep.text = "Questa app ti guiderà nello studio sul benessere psicofisico."
-        introStep.image = UIImage(named: "introImage") // da personalizzare con un asset
         steps.append(introStep)
         
         // Step 2: Eligibilità
         let eligibilityStep = ORKQuestionStep(
             identifier: OnboardingConstants.eligibilityStep,
-            title: "Eligibilità",
+            title: NSLocalizedString("eligibility_title", comment: ""),
             question: "Hai più di 18 anni?",
             answer: ORKAnswerFormat.booleanAnswerFormat()
         )
-        eligibilityStep.isOptional = false
-        steps.append(eligibilityStep)
+        eligibilityStep.isOptional = true
+        //steps.append(eligibilityStep)
         
         // Step 3: Consenso
         let consentDocument = ORKConsentDocument()
-        consentDocument.title = "Consenso Informato"
+        consentDocument.title = NSLocalizedString("consent", comment: "")
         
         let section = ORKConsentSection(type: .overview)
         section.summary = "Parteciperai a uno studio volontario."
-        section.content = "I tuoi dati saranno usati a fini di ricerca sul benessere lavorativo."
+        section.content = "I tuoi dati saranno usati a fini di ricerca e studio."
         consentDocument.sections = [section]
         
         let signature = ORKConsentSignature(forPersonWithTitle: nil, dateFormatString: nil, identifier: "ConsentSignature")

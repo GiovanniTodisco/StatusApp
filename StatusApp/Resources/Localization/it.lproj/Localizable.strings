@@ -1,0 +1,24 @@
+/* 
+  it.strings
+  StatusApp
+
+  Created by Area mobile on 05/04/25.
+  
+*/
+
+"app_name" = "StatusApp";
+"btn_continue" = "Continua";
+"welcome_title" = "Benvenuto in StatusApp";
+"welcome_msg" = "Questa app ti guiderà nello studio sul benessere psicofisico.";
+"eligibility_title" = "Eligibilità";
+"consent" = "Consenso Informato";
+"consent_info" = "Informazioni sul consenso";
+"partecipation_sum" = "Parteciperai a uno studio volontario.";
+"partecipation_con" = "I tuoi dati saranno usati a fini di ricerca e studio.";
+"partecipation_stop_msg" = "Puoi interrompere la partecipazione in qualsiasi momento.";
+"review_step_msg" = "Premi continua per fornire il consenso.";
+"review_step_msg_2" = "Acconsento a partecipare allo studio.";
+"health_permession_title" = "Permessi dati salute";
+"health_permession_msg" = "L'app chiederà accesso a dati di HealthKit come battito cardiaco, sonno, passi.";
+
+

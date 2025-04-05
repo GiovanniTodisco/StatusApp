@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E48A0F07D1E79ABADC76D76 /* Pods_StatusApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F2AA40D2FDEE5F442052D7 /* Pods_StatusApp.framework */; };
+		6535249A2DA117B2004C0372 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 653524982DA117B2004C0372 /* Localizable.strings */; };
 		65A2C7302D9C4F4E0055F2A8 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CD5C952D9C4AB700F2CEB0 /* ResearchKit.framework */; };
 		65BD8CF12DA03A07002B1DE9 /* OnboardingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BD8CF02DA03A07002B1DE9 /* OnboardingConstants.swift */; };
 		65BD8CF32DA03A18002B1DE9 /* OnboardingTaskFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BD8CF22DA03A18002B1DE9 /* OnboardingTaskFactory.swift */; };
@@ -33,6 +34,7 @@
 		65BD8D212DA03E9E002B1DE9 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BD8D202DA03E9E002B1DE9 /* AppColor.swift */; };
 		65BD8D232DA03F8E002B1DE9 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BD8D222DA03F8E002B1DE9 /* AppFont.swift */; };
 		65BD8D252DA03FB0002B1DE9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BD8D242DA03FB0002B1DE9 /* Constants.swift */; };
+		65BD8D262DA04838002B1DE9 /* welcome.json in Resources */ = {isa = PBXBuildFile; fileRef = 65BD8D1D2DA03B26002B1DE9 /* welcome.json */; };
 		65CD5C8E2D9C482600F2CEB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CD5C842D9C482600F2CEB0 /* AppDelegate.swift */; };
 		65CD5C902D9C482600F2CEB0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CD5C8C2D9C482600F2CEB0 /* SceneDelegate.swift */; };
 		65CD5C912D9C482600F2CEB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65CD5C852D9C482600F2CEB0 /* Assets.xcassets */; };
@@ -42,6 +44,7 @@
 /* Begin PBXFileReference section */
 		2329313F81A98364F32E6A88 /* Pods-StatusApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StatusApp.release.xcconfig"; path = "Target Support Files/Pods-StatusApp/Pods-StatusApp.release.xcconfig"; sourceTree = "<group>"; };
 		44B9B8487F0D9E001692121F /* Pods-StatusApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StatusApp.debug.xcconfig"; path = "Target Support Files/Pods-StatusApp/Pods-StatusApp.debug.xcconfig"; sourceTree = "<group>"; };
+		653524992DA117B2004C0372 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65BD8CF02DA03A07002B1DE9 /* OnboardingConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingConstants.swift; sourceTree = "<group>"; };
 		65BD8CF22DA03A18002B1DE9 /* OnboardingTaskFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTaskFactory.swift; sourceTree = "<group>"; };
 		65BD8CF42DA03A23002B1DE9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +110,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		653524832DA11569004C0372 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				653524982DA117B2004C0372 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		65BD8CED2DA039D0002B1DE9 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +150,7 @@
 		65BD8CF82DA03AB9002B1DE9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				653524832DA11569004C0372 /* Localization */,
 				65BD8CFA2DA03AC8002B1DE9 /* Fonts */,
 				65BD8CF92DA03AC0002B1DE9 /* Animations */,
 			);
@@ -255,11 +267,12 @@
 				};
 			};
 			buildConfigurationList = 65CD5C472D9C3C3F00F2CEB0 /* Build configuration list for PBXProject "StatusApp" */;
-			developmentRegion = en;
+			developmentRegion = it;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				it,
 			);
 			mainGroup = 65CD5C432D9C3C3F00F2CEB0;
 			minimizedProjectReferenceProxies = 1;
@@ -278,10 +291,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65BD8D262DA04838002B1DE9 /* welcome.json in Resources */,
 				65CD5C912D9C482600F2CEB0 /* Assets.xcassets in Resources */,
 				65CD5C932D9C482600F2CEB0 /* LaunchScreen.storyboard in Resources */,
 				65BD8D0B2DA03AD4002B1DE9 /* AvenirNextCyr-Regular.ttf in Resources */,
 				65BD8D0C2DA03AD4002B1DE9 /* AvenirNextCyr-ThinItalic.ttf in Resources */,
+				6535249A2DA117B2004C0372 /* Localizable.strings in Resources */,
 				65BD8D0D2DA03AD4002B1DE9 /* AvenirNextCyr-LightItalic.ttf in Resources */,
 				65BD8D0E2DA03AD4002B1DE9 /* AvenirNextCyr-Bold.ttf in Resources */,
 				65BD8D0F2DA03AD4002B1DE9 /* AvenirNextCyr-Medium.ttf in Resources */,
@@ -364,6 +379,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		653524982DA117B2004C0372 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				653524992DA117B2004C0372 /* it */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		65CD5C882D9C482600F2CEB0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -388,9 +411,8 @@
 				INFOPLIST_FILE = StatusApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -423,9 +445,8 @@
 				INFOPLIST_FILE = StatusApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -450,6 +471,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -513,6 +535,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
