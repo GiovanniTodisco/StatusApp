@@ -9,7 +9,7 @@
 "app_name" = "StatusApp";
 "btn_continue" = "Continua";
 "welcome_title" = "Benvenuto in StatusApp";
-"welcome_msg" = "Questa app ti guiderà nello studio sul benessere psicofisico.";
+"welcome_msg" = "Questa app ti accompagnerà nella raccolta e consultazione dei tuoi dati sanitari.";
 "eligibility_title" = "Eligibilità";
 "consent" = "Consenso Informato";
 "consent_info" = "Informazioni sul consenso";
@@ -19,6 +19,23 @@
 "review_step_msg" = "Premi continua per fornire il consenso.";
 "review_step_msg_2" = "Acconsento a partecipare allo studio.";
 "health_permession_title" = "Permessi dati salute";
-"health_permession_msg" = "L'app chiederà accesso a dati di HealthKit come battito cardiaco, sonno, passi.";
-
-
+"health_permession_msg" = "L'app chiederà accesso a dati come battito cardiaco, sonno, passi.";
+"consent_intro_title" = "Prima di iniziare";
+"consent_overview_title" = "Panoramica";
+"consent_overview_content" = "Stai partecipando a uno studio che raccoglie dati relativi alla tua salute e al tuo benessere fisico, con finalità di ricerca.";
+"consent_data_title" = "Tipi di dati raccolti";
+"consent_data_content" = "Verranno raccolti alcuni parametri legati alla tua attività fisica e alla salute, come battito cardiaco, qualità del sonno e numero di passi.";
+"consent_privacy_title" = "Protezione dei dati";
+"consent_privacy_content" = "Tutti i dati raccolti saranno trattati in forma anonima e nel rispetto delle normative sulla privacy.";
+"consent_time_title" = "Durata e impegno";
+"consent_time_content" = "L'app richiederà solo pochi minuti al giorno per consultare le statistiche o completare brevi questionari.";
+"review_step_msg" = "Leggi attentamente il documento qui sotto e fornisci il tuo consenso.";
+"signature_step_title" = "Fornisci il tuo consenso";
+"form_title" = "Dati personali";
+"form_description" = "Inserisci le tue informazioni per completare il profilo.";
+"form_first_name" = "Nome";
+"form_last_name" = "Cognome";
+"form_birthdate" = "Data di nascita";
+"profile" = "Profilo";
+"healthkit_permission_title" = "Permessi dati salute";
+"healthkit_permission_text" = "L'app richiederà l'accesso ai dati sanitari presenti sul tuo dispositivo, come battito cardiaco, sonno e attività fisica, per supportare le funzionalità di monitoraggio e analisi.";

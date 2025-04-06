@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHealthShareUsageDescription</key>
+	<string>L&apos;app richiede l&apos;accesso ai tuoi dati sanitari per personalizzare l’esperienza e supportare la ricerca.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>L&apos;app può salvare dati sanitari come attività o sonno, per migliorare il tuo benessere.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
