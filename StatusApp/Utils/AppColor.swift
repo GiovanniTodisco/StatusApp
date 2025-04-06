@@ -16,7 +16,7 @@ enum AppColor {
     static let accentCoral = UIColor(named: "AccentCoral")!
     
     // Background colors
-    static let backgroundDark = UIColor(named: "BackgroundDark")!
+    static let dark = UIColor(named: "BackgroundDark")!
     static let cardBackground = UIColor(named: "CardBackground")!
     
     // Text colors

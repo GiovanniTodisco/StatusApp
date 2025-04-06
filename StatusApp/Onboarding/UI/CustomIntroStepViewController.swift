@@ -17,12 +17,11 @@ class CustomIntroStepViewController: ORKInstructionStepViewController {
         super.viewDidLoad()
         
         self.cancelButtonItem = nil
-        self.internalContinueButtonItem = nil;
         setupCustomLayout()
     }
 
     private func setupCustomLayout() {
-        view.backgroundColor = AppColor.cardBackground
+        //view.backgroundColor = AppColor.cardBackground
         
         // Titolo custom
         let appTitle = UILabel()
@@ -63,16 +62,9 @@ class CustomIntroStepViewController: ORKInstructionStepViewController {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(descriptionLabel)
 
-        // 1. Bottone custom
-        let continueButton = UIButton(type: .system)
-        continueButton.setTitle(NSLocalizedString("btn_continue", comment: ""), for: .normal)
-        continueButton.titleLabel?.font = AppFont.button
-        continueButton.setTitleColor(.white, for: .normal)
-        continueButton.backgroundColor = AppColor.primary
-        continueButton.layer.cornerRadius = 10
-        continueButton.translatesAutoresizingMaskIntoConstraints = false
-        continueButton.addTarget(self, action: #selector(goForward), for: .touchUpInside)
-        view.addSubview(continueButton)
+        
+        internalContinueButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font : AppFont.button], for: .normal)
+        internalContinueButtonItem?.title = NSLocalizedString("btn_continue", comment: "")
 
         NSLayoutConstraint.activate([
             // Titolo in alto
@@ -95,13 +87,7 @@ class CustomIntroStepViewController: ORKInstructionStepViewController {
             // Descrizione sotto titolo
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: view.bounds.height * 0.015),
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width * 0.07),
-            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width * 0.07),
-
-            // Bottone in basso
-            continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.bounds.height * 0.03),
-            continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
-            continueButton.heightAnchor.constraint(equalToConstant: 44)
+            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.bounds.width * 0.07)
         ])
     }
 }
