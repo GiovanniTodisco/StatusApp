@@ -31,6 +31,10 @@ enum AppFont {
     static var description: UIFont {
         return custom("AvenirNextCyr-Light", size: Constants.DESCRIPTION_TEXT_SIZE)
     }
+    
+    static var info: UIFont {
+        return custom("AvenirNextCyr-ThinItalic", size: Constants.DESCRIPTION_TEXT_SIZE)
+    }
 
     static var button: UIFont {
         return custom("AvenirNextCyr-Medium", size: Constants.BUTTON_TEXT_SIZE)

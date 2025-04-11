@@ -36,6 +36,14 @@
 "form_first_name" = "Nome";
 "form_last_name" = "Cognome";
 "form_birthdate" = "Data di nascita";
+"form_height" = "Altezza";
+"form_weight" = "Peso";
+"form_gender_male" = "Uomo";
+"form_gender_female" = "Donna";
+"form_gender" = "Sesso";
 "profile" = "Profilo";
+"personal_data_footer" = "Peso e altezza sono facoltative, potrai aggiungerle in seguito nella sezione profilo";
 "healthkit_permission_title" = "Permessi dati salute";
 "healthkit_permission_text" = "L'app richiederà l'accesso ai dati sanitari presenti sul tuo dispositivo, come battito cardiaco, sonno e attività fisica, per supportare le funzionalità di monitoraggio e analisi.";
+"welcome" = "Benvenuto, %@ %@";
+"result_today_msg" = "Questi sono i tuoi risultati di oggi, grazie per contribuire alla ricerca 👇";

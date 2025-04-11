@@ -10,9 +10,10 @@ import ResearchKit
 import HealthKit
 
 class OnboardingViewController: UIViewController {
-
+    
     private var hasFinishedOnboarding = false
-
+    private var loadingIndicator: UIActivityIndicatorView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +25,13 @@ class OnboardingViewController: UIViewController {
         } else {
             presentOnboarding()
         }
+        
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.center = view.center
+        spinner.hidesWhenStopped = true
+        spinner.startAnimating()
+        view.addSubview(spinner)
+        loadingIndicator = spinner
     }
     
     
@@ -35,71 +43,96 @@ class OnboardingViewController: UIViewController {
         present(taskViewController, animated: true)
     }
     
-    func navigateToDashboard() {
-        let mainTabBarController = MainTabBarController()
-
+    func navigateToDashboard(completion: (() -> Void)? = nil) {
+        let splashVC = SplashViewController()
+        
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
            let window = sceneDelegate.window {
             
-            UIView.transition(
-                        with: window,
-                        duration: 0.5,
-                        options: .transitionCrossDissolve,
-                        animations: {
-                            window.rootViewController = mainTabBarController
-                        },
-                        completion: nil
-                    )
-            
-            window.rootViewController = mainTabBarController
+            window.rootViewController = splashVC
             window.makeKeyAndVisible()
+            
+            Task {
+                let isHealthKitGranted = UserDefaults.standard.bool(forKey: Constants.HEALTHKIT_PERMISSION_KEY)
+                if !isHealthKitGranted {
+                    await self.requestHealthKitAuthorization()
+                }
+                
+                let mainTabBarController = MainTabBarController()
+                UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                    window.rootViewController = mainTabBarController
+                }, completion: { _ in
+                    window.makeKeyAndVisible()
+                    completion?()
+                })
+            }
+        } else {
+            completion?()
+        }
+    }
+    
+    func requestHealthKitAuthorization() async {
+        do {
+            let isAuthorized = try await HealthKitManager.shared.requestAuthorization()
+            print("HealthKit autorizzato: \(isAuthorized)")
+            UserDefaults.standard.set(isAuthorized, forKey: Constants.HEALTHKIT_PERMISSION_KEY)
+        } catch {
+            print("Errore durante la richiesta di autorizzazione a HealthKit: \(error.localizedDescription)")
         }
     }
 }
 
 extension OnboardingViewController: ORKTaskViewControllerDelegate {
-
+    
     func taskViewController(_ taskViewController: ORKTaskViewController, viewControllerFor step: ORKStep) -> ORKStepViewController? {
         
         switch step.identifier {
-            case OnboardingConstants.introStep:
-                return CustomIntroStepViewController(step: step)
-            case OnboardingConstants.consentInfoStep:
-                return CustomConsentInfoStepViewController(step: step)
-            case OnboardingConstants.consentReviewStep:
-                return CustomConsentReviewStepViewController(step: step)
-            case OnboardingConstants.personalDataStep:
-                return CustomPersonalDataStepViewController(step: step)
-            default:
-                return nil
+        case OnboardingConstants.introStep:
+            return CustomIntroStepViewController(step: step)
+        case OnboardingConstants.consentInfoStep:
+            return CustomConsentInfoStepViewController(step: step)
+        case OnboardingConstants.consentReviewStep:
+            return CustomConsentReviewStepViewController(step: step)
+        case OnboardingConstants.personalDataStep:
+            return CustomPersonalDataStepViewController(step: step)
+        default:
+            return nil
         }
     }
-
+    
     func taskViewController(_ taskViewController: ORKTaskViewController, didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
         taskViewController.dismiss(animated: true) {
             if reason == .completed {
                 print("Onboarding completato!")
                 UserDefaults.standard.set(true, forKey: Constants.ONBOARDING_COMPLETED_KEY)
-
+                
                 if let personalDataResult = taskViewController.result.stepResult(forStepIdentifier: OnboardingConstants.personalDataStep) {
                     let firstNameResult = personalDataResult.result(forIdentifier: "firstName") as? ORKTextQuestionResult
                     let lastNameResult = personalDataResult.result(forIdentifier: "lastName") as? ORKTextQuestionResult
                     let birthDateResult = personalDataResult.result(forIdentifier: "birthDate") as? ORKDateQuestionResult
-
-                    if let firstName = firstNameResult?.textAnswer,
-                       let lastName = lastNameResult?.textAnswer,
+                    
+                    if let firstName = firstNameResult?.textAnswer?.trimmingCharacters(in: .whitespacesAndNewlines),
+                       let lastName = lastNameResult?.textAnswer?.trimmingCharacters(in: .whitespacesAndNewlines),
                        let birthDate = birthDateResult?.dateAnswer {
                         let profile = UserProfile(firstName: firstName, lastName: lastName, birthDate: birthDate)
                         profile.save()
                     }
                     
                     self.hasFinishedOnboarding = true
+                    
+                    self.navigateToDashboard {
+                        let isHealthKitGranted = UserDefaults.standard.bool(forKey: Constants.HEALTHKIT_PERMISSION_KEY)
+                        if !isHealthKitGranted {
+                            Task {
+                                await self.requestHealthKitAuthorization()
+                            }
+                        }
+                    }
                 }
-                // Navigazione dashboard
+                
+            } else {
+                self.navigateToDashboard()
             }
-            
-            self.navigateToDashboard()
         }
     }
-    
 }
