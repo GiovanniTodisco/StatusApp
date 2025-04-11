@@ -25,6 +25,6 @@ struct Constants {
     static let PRIMARY_TEXT_SIZE: CGFloat = 17
     static let DESCRIPTION_TEXT_SIZE: CGFloat = 15
     
-    static let SPACING: CGFloat = 20
+    static let APP_MARGIN: CGFloat = 20
     
 }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4E48A0F07D1E79ABADC76D76 /* Pods_StatusApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F2AA40D2FDEE5F442052D7 /* Pods_StatusApp.framework */; };
+		65201C752DA4383900775CFC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65201C742DA4383900775CFC /* SplashViewController.swift */; };
+		65201C772DA4411A00775CFC /* HealthCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65201C762DA4411A00775CFC /* HealthCardCell.swift */; };
 		6535249A2DA117B2004C0372 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 653524982DA117B2004C0372 /* Localizable.strings */; };
 		653524A12DA12BF2004C0372 /* CustomConsentInfoStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653524A02DA12BF2004C0372 /* CustomConsentInfoStepViewController.swift */; };
 		653524A32DA145F0004C0372 /* CustomConsentReviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653524A22DA145F0004C0372 /* CustomConsentReviewStepViewController.swift */; };
@@ -55,6 +57,8 @@
 /* Begin PBXFileReference section */
 		2329313F81A98364F32E6A88 /* Pods-StatusApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StatusApp.release.xcconfig"; path = "Target Support Files/Pods-StatusApp/Pods-StatusApp.release.xcconfig"; sourceTree = "<group>"; };
 		44B9B8487F0D9E001692121F /* Pods-StatusApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StatusApp.debug.xcconfig"; path = "Target Support Files/Pods-StatusApp/Pods-StatusApp.debug.xcconfig"; sourceTree = "<group>"; };
+		65201C742DA4383900775CFC /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		65201C762DA4411A00775CFC /* HealthCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthCardCell.swift; sourceTree = "<group>"; };
 		653524992DA117B2004C0372 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		653524A02DA12BF2004C0372 /* CustomConsentInfoStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConsentInfoStepViewController.swift; sourceTree = "<group>"; };
 		653524A22DA145F0004C0372 /* CustomConsentReviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConsentReviewStepViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 		65A342E72DA2E52D009FC844 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				65201C742DA4383900775CFC /* SplashViewController.swift */,
 				65A342F02DA2E5C5009FC844 /* ProfileViewController.swift */,
 				65A342EE2DA2E5BD009FC844 /* SurveysViewController.swift */,
 				65A342EC2DA2E5B5009FC844 /* ChartsViewController.swift */,
@@ -172,6 +177,7 @@
 		65A342E82DA2E535009FC844 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				65201C762DA4411A00775CFC /* HealthCardCell.swift */,
 				65403F4E2DA28F3F0050047A /* UserProfile.swift */,
 			);
 			path = Model;
@@ -448,9 +454,11 @@
 				65A342EF2DA2E5BD009FC844 /* SurveysViewController.swift in Sources */,
 				65BD8CF12DA03A07002B1DE9 /* OnboardingConstants.swift in Sources */,
 				65BD8D212DA03E9E002B1DE9 /* AppColor.swift in Sources */,
+				65201C772DA4411A00775CFC /* HealthCardCell.swift in Sources */,
 				65BD8D232DA03F8E002B1DE9 /* AppFont.swift in Sources */,
 				65CD5C8E2D9C482600F2CEB0 /* AppDelegate.swift in Sources */,
 				653524A12DA12BF2004C0372 /* CustomConsentInfoStepViewController.swift in Sources */,
+				65201C752DA4383900775CFC /* SplashViewController.swift in Sources */,
 				65403F532DA2C1E80050047A /* HealthKitManager.swift in Sources */,
 				65C0E6832DA280CF005BB1DF /* CustomPersonalDataStepViewController.swift in Sources */,
 				65BD8CF72DA03A40002B1DE9 /* CustomIntroStepViewController.swift in Sources */,
@@ -493,6 +501,7 @@
 				CODE_SIGN_ENTITLEMENTS = StatusApp/StatusApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WQ886393P2;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StatusApp/Info.plist;
@@ -531,6 +540,7 @@
 				CODE_SIGN_ENTITLEMENTS = StatusApp/StatusApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WQ886393P2;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StatusApp/Info.plist;
