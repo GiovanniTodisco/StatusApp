@@ -4,4 +4,5 @@ target 'StatusApp' do
   use_frameworks!
   pod 'ResearchKit'
   pod 'lottie-ios', '4.5.1'
+  pod 'DGCharts'
 end

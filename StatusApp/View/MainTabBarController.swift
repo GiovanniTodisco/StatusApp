@@ -19,7 +19,7 @@ class MainTabBarController: UITabBarController {
         
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = AppColor.cardBackground
+        appearance.backgroundColor = .systemBackground
 
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance // <-- questa è la chiave!
@@ -47,7 +47,7 @@ class MainTabBarController: UITabBarController {
         viewControllers = [homeNav, chartsNav, surveysNav, profileNav]
 
         // Stile del tab bar (facoltativo)
-        tabBar.tintColor = AppColor.dark
+        tabBar.tintColor = AppColor.primaryIcon
 
         Task {
             await loadData()

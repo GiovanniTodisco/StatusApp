@@ -1,20 +1,26 @@
 PODS:
+  - DGCharts (5.1.0):
+    - DGCharts/Core (= 5.1.0)
+  - DGCharts/Core (5.1.0)
   - lottie-ios (4.5.1)
   - ResearchKit (2.2.16)
 
 DEPENDENCIES:
+  - DGCharts
   - lottie-ios (= 4.5.1)
   - ResearchKit
 
 SPEC REPOS:
   trunk:
+    - DGCharts
     - lottie-ios
     - ResearchKit
 
 SPEC CHECKSUMS:
+  DGCharts: 1c6daf585b6cfc78807af44ea690d357c410627f
   lottie-ios: 248b380fa1b97d18e792c37d90da7ab2aa0d6562
   ResearchKit: 4ce3751136fc82a02ac83f873b09b01b6974a761
 
-PODFILE CHECKSUM: b49a5ffeacf277562173946abc8296c837ef513b
+PODFILE CHECKSUM: c12210952266e4b9d475cf96d6dced5d190f85c9
 
 COCOAPODS: 1.16.2

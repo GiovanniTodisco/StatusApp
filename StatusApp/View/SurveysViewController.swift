@@ -12,7 +12,7 @@ class SurveysViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = AppColor.backgroundColor
         title = "Sondaggi"
         
         // Inizializza la UI per i sondaggi

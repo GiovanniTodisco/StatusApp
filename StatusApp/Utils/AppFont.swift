@@ -11,6 +11,18 @@ enum AppFont {
     static func custom(_ name: String, size: CGFloat) -> UIFont {
         return UIFont(name: name, size: size)!
     }
+    
+    static var title: UIFont {
+        return UIFont.systemFont(ofSize: Constants.TITLE_SIZE, weight: .bold)
+    }
+    
+    static var welcome: UIFont {
+        return UIFont.systemFont(ofSize: Constants.WELCOME_SIZE, weight: .bold)
+    }
+    
+    static var description: UIFont {
+        return UIFont.systemFont(ofSize: Constants.DESCRIPTION_TEXT_SIZE, weight: .regular)
+    }
 
     static var appName: UIFont {
         return custom("AvenirNextCyr-Bold", size: Constants.APP_NAME_SIZE)
@@ -20,17 +32,11 @@ enum AppFont {
         return custom("AvenirNextCyr-Bold", size: Constants.TITLE_SIZE_INTRO)
     }
     
-    static var title: UIFont {
-        return custom("AvenirNextCyr-Bold", size: Constants.TITLE_SIZE)
-    }
-
+    
     static var primary: UIFont {
         return custom("AvenirNextCyr-Regular", size: Constants.PRIMARY_TEXT_SIZE)
     }
     
-    static var description: UIFont {
-        return custom("AvenirNextCyr-Light", size: Constants.DESCRIPTION_TEXT_SIZE)
-    }
     
     static var info: UIFont {
         return custom("AvenirNextCyr-ThinItalic", size: Constants.DESCRIPTION_TEXT_SIZE)
