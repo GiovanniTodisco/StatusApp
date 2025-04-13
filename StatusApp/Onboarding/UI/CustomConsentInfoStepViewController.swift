@@ -86,7 +86,7 @@ class CustomConsentInfoStepViewController: ORKStepViewController {
         continueButton.setTitle(NSLocalizedString("btn_continue", comment: ""), for: .normal)
         continueButton.setTitleColor(.white, for: .normal)
         continueButton.titleLabel?.font = AppFont.button
-        continueButton.backgroundColor = AppColor.dark
+        continueButton.backgroundColor = AppColor.primaryIcon
         continueButton.layer.cornerRadius = 10
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.addTarget(self, action: #selector(goForwardAction), for: .touchUpInside)

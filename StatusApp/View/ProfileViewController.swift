@@ -12,7 +12,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = AppColor.backgroundColor
         title = "Profilo"
         
         // Configura l'interfaccia utente per il profilo (foto, nome, dati)

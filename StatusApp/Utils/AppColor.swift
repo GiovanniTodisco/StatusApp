@@ -9,21 +9,18 @@ import UIKit
 
 enum AppColor {
     // Primary brand color for navigation, highlights, active buttons
-    static let primary = UIColor(named: "PrimaryTurquoise")!
+    static let primaryText = UIColor(named: "PrimaryText")!
+    static let primaryIcon = UIColor(named: "PrimaryIcon")!
+    static let backgroundColor = UIColor(named: "BackgroundColor")!
+    static let backgroundColorCard = UIColor(named: "BackgroundColorCard")!
     
-    // Secondary accent colors
-    static let accentMint = UIColor(named: "AccentMint")!
-    static let accentCoral = UIColor(named: "AccentCoral")!
+    // Icon Color
+    static let distanceIconColor = UIColor(named: "DistanceIconColor")!
+    static let heartIconColor = UIColor(named: "HeartIconColor")!
+    static let mentalIconColor = UIColor(named: "MentalIconColor")!
+    static let passiIconColor = UIColor(named: "PassiIconColor")!
+    static let sleepIconColor = UIColor(named: "SleepIconColor")!
     
-    // Background colors
-    static let dark = UIColor(named: "BackgroundDark")!
-    static let cardBackground = UIColor(named: "CardBackground")!
-    
-    // Text colors
-    static let textSecondary = UIColor(named: "TextSecondary")!
-    
-    // Utility colors (if needed in the future)
-    // static let success = UIColor.systemGreen
-    // static let warning = UIColor.systemOrange
-    // static let error = UIColor.systemRed
+    // Visualizza Color
+    static let visualizzaColor = UIColor(named: "VisualizzaColor")!    
 }

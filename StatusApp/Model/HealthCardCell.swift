@@ -26,19 +26,19 @@ class HealthCardCell: UICollectionViewCell {
     }
 
     private func setup() {
-        backgroundColor = .white
+        backgroundColor = AppColor.backgroundColorCard
         layer.cornerRadius = 12
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.1
-        layer.shadowOffset = CGSize(width: 0, height: 2)
+        layer.shadowOpacity = 1
+        layer.shadowOffset = CGSize(width: 0, height: 4)
         layer.shadowRadius = 4
 
         iconView.translatesAutoresizingMaskIntoConstraints = false
         iconView.contentMode = .scaleAspectFit
-        iconView.tintColor = AppColor.primary
+        iconView.tintColor = AppColor.primaryIcon
 
-        titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
-        titleLabel.textColor = AppColor.dark
+        titleLabel.font = .systemFont(ofSize: 24, weight: .semibold)
+        titleLabel.textColor = AppColor.primaryText
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
         dateLabel.font = .systemFont(ofSize: 12, weight: .regular)
@@ -46,12 +46,12 @@ class HealthCardCell: UICollectionViewCell {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
 
         valueLabel.font = .systemFont(ofSize: 20, weight: .bold)
-        valueLabel.textColor = AppColor.accentMint
+        valueLabel.textColor = AppColor.primaryText
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
 
         arrowView.translatesAutoresizingMaskIntoConstraints = false
-        arrowView.image = UIImage(systemName: "chevron.right")
-        arrowView.tintColor = .lightGray
+        arrowView.image = UIImage(systemName: "flame.fill")
+        arrowView.tintColor = .red
         arrowView.contentMode = .scaleAspectFit
 
         let contentStack = UIStackView(arrangedSubviews: [iconView, titleLabel, dateLabel, valueLabel, arrowView])

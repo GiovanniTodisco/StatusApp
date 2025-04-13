@@ -28,7 +28,7 @@ class CustomIntroStepViewController: ORKInstructionStepViewController {
         appTitle.text = NSLocalizedString("app_name", comment: "")
         appTitle.font = AppFont.appName
         appTitle.textAlignment = .center
-        appTitle.textColor = AppColor.accentCoral
+        appTitle.textColor = AppColor.primaryText
         appTitle.numberOfLines = 0
         appTitle.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(appTitle)

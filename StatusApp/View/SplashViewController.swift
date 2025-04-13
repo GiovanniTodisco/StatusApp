@@ -10,7 +10,7 @@ import UIKit
 class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .cardBackground
+        view.backgroundColor = AppColor.backgroundColor
         
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.center = view.center

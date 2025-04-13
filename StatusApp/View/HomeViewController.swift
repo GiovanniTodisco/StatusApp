@@ -8,6 +8,7 @@
 import UIKit
 
 struct HealthDataModel {
+    let metric: HealthMetric
     let iconName: String
     let title: String
     let date: String
@@ -57,17 +58,17 @@ class HomeViewController: UIViewController, Loadable {
         let appearanceNav = UINavigationBarAppearance()
         appearanceNav.configureWithOpaqueBackground()
         
-        appearanceNav.backgroundColor = AppColor.cardBackground
+        appearanceNav.backgroundColor = AppColor.backgroundColor
 
         navigationController?.navigationBar.standardAppearance = appearanceNav
         navigationController?.navigationBar.scrollEdgeAppearance = appearanceNav
         
-        view.backgroundColor = AppColor.cardBackground
+        view.backgroundColor = .systemBackground
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = AppColor.cardBackground
+        appearance.backgroundColor = AppColor.backgroundColor
         navigationItem.largeTitleDisplayMode = .automatic // Changed line
-        appearance.largeTitleTextAttributes = [.foregroundColor: AppColor.dark] // Added line
+        appearance.largeTitleTextAttributes = [.foregroundColor: AppColor.primaryText] // Added line
 
         title = "Home"
         
@@ -78,8 +79,8 @@ class HomeViewController: UIViewController, Loadable {
 
         self.setupUI()
 
-        scrollView.backgroundColor = AppColor.cardBackground
-        stackView.backgroundColor = .clear
+        scrollView.backgroundColor = AppColor.backgroundColor
+        stackView.backgroundColor = AppColor.backgroundColor
         self.extendedLayoutIncludesOpaqueBars = true
         self.edgesForExtendedLayout = []
         
@@ -114,15 +115,15 @@ class HomeViewController: UIViewController, Loadable {
             welcomeLabel.text = NSLocalizedString("welcome", comment: "")
         }
 
-        welcomeLabel.font = AppFont.title
-        welcomeLabel.textColor = AppColor.dark
+        welcomeLabel.font = AppFont.welcome
+        welcomeLabel.textColor = AppColor.primaryText
         welcomeLabel.textAlignment = .left
         welcomeLabel.numberOfLines = 0
         welcomeLabel.alpha = 0
 
         subtitleLabel.text = NSLocalizedString("result_today_msg", comment: "")
         subtitleLabel.font = AppFont.description
-        subtitleLabel.textColor = AppColor.dark
+        subtitleLabel.textColor = AppColor.primaryText
         subtitleLabel.textAlignment = .left
         subtitleLabel.numberOfLines = 0
         subtitleLabel.alpha = 0
@@ -134,10 +135,10 @@ class HomeViewController: UIViewController, Loadable {
     private func createHealthCard(for data: HealthDataModel) -> UIView {
         let cardView = UIView()
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.backgroundColor = AppColor.cardBackground
+        cardView.backgroundColor = AppColor.backgroundColorCard
         cardView.layer.cornerRadius = 12
-        cardView.layer.shadowColor = UIColor.black.cgColor
-        cardView.layer.shadowOpacity = 0.1
+        cardView.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        cardView.layer.shadowOpacity = 0.4
         cardView.layer.shadowOffset = CGSize(width: 0, height: 2)
         cardView.layer.shadowRadius = 4
 
@@ -147,33 +148,58 @@ class HomeViewController: UIViewController, Loadable {
         ])
 
         let iconImageView = UIImageView(image: UIImage(systemName: data.iconName))
-        iconImageView.tintColor = AppColor.primary
+        iconImageView.tintColor = data.metric.color
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.contentMode = .scaleAspectFit
 
         let titleLabel = UILabel()
         titleLabel.text = data.title
         titleLabel.font = AppFont.title
-        titleLabel.textColor = AppColor.dark
+        titleLabel.textColor = data.metric.color
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
         let dateLabel = UILabel()
         dateLabel.text = data.date
-        dateLabel.font = AppFont.primary
-        dateLabel.textColor = AppColor.dark
+        dateLabel.font = AppFont.description
+        dateLabel.textColor = AppColor.primaryText
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
 
         let valueLabel = UILabel()
         valueLabel.text = data.value
-        valueLabel.font = AppFont.primary
-        valueLabel.textColor = AppColor.dark
+        valueLabel.font = AppFont.description
+        valueLabel.textColor = AppColor.primaryText
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let visualizzaLabel = UILabel()
+        visualizzaLabel.text = NSLocalizedString("visualizza", comment: "")
+        visualizzaLabel.font = AppFont.description
+        visualizzaLabel.textColor = AppColor.visualizzaColor
+        visualizzaLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let iconArrowVisualizza = UIImageView(image: UIImage(systemName: "chevron.right"))
+        iconArrowVisualizza.tintColor = AppColor.visualizzaColor
+        iconArrowVisualizza.translatesAutoresizingMaskIntoConstraints = false
+        iconArrowVisualizza.contentMode = .scaleAspectFit
+        
+        let horizontalStackVisualizza = UIStackView(arrangedSubviews: [visualizzaLabel, iconArrowVisualizza])
+        horizontalStackVisualizza.axis = .horizontal
+        horizontalStackVisualizza.spacing = 2
+        horizontalStackVisualizza.alignment = .fill
+        horizontalStackVisualizza.distribution = .equalCentering
+        horizontalStackVisualizza.translatesAutoresizingMaskIntoConstraints = false
+        horizontalStackVisualizza.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
-        let verticalStack = UIStackView(arrangedSubviews: [titleLabel, dateLabel, valueLabel])
+        let visualizzaContainer = UIStackView(arrangedSubviews: [UIView(), horizontalStackVisualizza])
+        visualizzaContainer.axis = .horizontal
+        visualizzaContainer.spacing = 0
+        visualizzaContainer.alignment = .center
+        visualizzaContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        let verticalStack = UIStackView(arrangedSubviews: [titleLabel, dateLabel, valueLabel, visualizzaContainer])
         verticalStack.axis = .vertical
-        verticalStack.spacing = 4
+        verticalStack.spacing = 8
         verticalStack.translatesAutoresizingMaskIntoConstraints = false
-
+        
         let horizontalStack = UIStackView(arrangedSubviews: [iconImageView, verticalStack])
         horizontalStack.axis = .horizontal
         horizontalStack.spacing = 12
@@ -186,10 +212,10 @@ class HomeViewController: UIViewController, Loadable {
             iconImageView.widthAnchor.constraint(equalToConstant: 40),
             iconImageView.heightAnchor.constraint(equalToConstant: 40),
 
-            horizontalStack.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 12),
+            horizontalStack.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 8),
             horizontalStack.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 12),
             horizontalStack.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -12),
-            horizontalStack.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -12)
+            horizontalStack.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -16)
         ])
 
         return cardView

@@ -39,7 +39,7 @@ class OnboardingViewController: UIViewController {
         let taskViewController = ORKTaskViewController(task: OnboardingTaskFactory.makeOnboardingTask(), taskRun: nil)
         taskViewController.delegate = self
         taskViewController.modalPresentationStyle = .fullScreen
-        taskViewController.view.tintColor = AppColor.dark
+        taskViewController.view.tintColor = AppColor.primaryIcon
         present(taskViewController, animated: true)
     }
     
