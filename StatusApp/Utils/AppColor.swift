@@ -22,5 +22,10 @@ enum AppColor {
     static let sleepIconColor = UIColor(named: "SleepIconColor")!
     
     // Visualizza Color
-    static let visualizzaColor = UIColor(named: "VisualizzaColor")!    
+    static let visualizzaColor = UIColor(named: "VisualizzaColor")!
+    
+    // Outcome Color
+    static let successColor = UIColor.systemGreen
+    static let errorColor = UIColor.systemRed
+    static let warningColor = UIColor.systemYellow
 }

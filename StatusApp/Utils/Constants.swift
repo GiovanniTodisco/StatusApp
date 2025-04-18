@@ -20,6 +20,7 @@ struct Constants {
     
     static let TITLE_SIZE: CGFloat = 24
     static let DESCRIPTION_TEXT_SIZE: CGFloat = 18
+    static let CAMPIONE_TEXT_SIZE: CGFloat = 12
     static let WELCOME_SIZE: CGFloat = 32
     
     static let BUTTON_TEXT_SIZE: CGFloat = 18

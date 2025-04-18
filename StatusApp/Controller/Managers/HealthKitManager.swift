@@ -53,13 +53,11 @@ class HealthKitManager {
         }
 
         let currentPrefs = ChartsPreferencesManager.load()
-        if currentPrefs.selectedMetrics.isEmpty {
-            let updatedPrefs = ChartsPreferences(
-                selectedMetrics: authorizedMetrics,
-                selectedTimeRange: currentPrefs.selectedTimeRange
-            )
-            ChartsPreferencesManager.save(updatedPrefs)
-        }
+        let updatedPrefs = ChartsPreferences(
+            selectedMetrics: authorizedMetrics,
+            selectedTimeRange: currentPrefs.selectedTimeRange
+        )
+        ChartsPreferencesManager.save(updatedPrefs)
 
         return !authorizedMetrics.isEmpty
     }
@@ -141,7 +139,7 @@ class HealthKitManager {
         if let mindfulSessionResult = try await mindfulSession {
             let duration = Int(mindfulSessionResult.endDate.timeIntervalSince(mindfulSessionResult.startDate) / 60)
             results.append(HealthDataModel(metric: .mindful,
-                                        	iconName: HealthMetric.mindful.iconName,
+                                            iconName: HealthMetric.mindful.iconName,
                                            title: HealthMetric.mindful.rawValue,
                                            date: formattedDate(mindfulSessionResult.startDate),
                                            value: "\(duration) min"))
@@ -175,110 +173,18 @@ class HealthKitManager {
         ].filter { preferences.selectedMetrics.contains($0.metric.rawValue) }
 
         for (identifier, unit, metric) in types {
-            guard let quantityType = HKObjectType.quantityType(forIdentifier: identifier) else { continue }
-
-            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: now, options: .strictStartDate)
-            let anchorDate = calendar.startOfDay(for: now)
-            let interval = DateComponents(day: 1)
-
-            let options: HKStatisticsOptions = {
-                switch identifier {
-                case .heartRate, .heartRateVariabilitySDNN:
-                    return .discreteAverage
-                default:
-                    return .cumulativeSum
-                }
-            }()
-
-            let statsQuery = HKStatisticsCollectionQuery(
-                quantityType: quantityType,
-                quantitySamplePredicate: predicate,
-                options: options,
-                anchorDate: anchorDate,
-                intervalComponents: interval
-            )
-
-            try await withCheckedThrowingContinuation { (continuation : CheckedContinuation<Void, Error>) in
-                statsQuery.initialResultsHandler = { _, collection, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-
-                    var values: [(value: String, dateString: String)] = []
-                    collection?.enumerateStatistics(from: startDate, to: now) { stats, _ in
-                        let dateStr = self.formattedShortDate(stats.startDate)
-                        let value = (options == .discreteAverage) ?
-                            stats.averageQuantity()?.doubleValue(for: unit) :
-                            stats.sumQuantity()?.doubleValue(for: unit)
-
-                        if let val = value {
-                            let formatted = identifier == .distanceWalkingRunning
-                                ? String(format: "%.2f", val)
-                                : "\(Int(val))"
-                            values.append((formatted, dateStr))
-                        } else {
-                            values.append(("0", dateStr))
-                        }
-                    }
-
-                    results[metric.rawValue] = values
-                    continuation.resume()
-                }
-                self.healthStore.execute(statsQuery)
-            }
+            let values = try await fetchQuantitySamplesGroupedByDay(for: identifier, unit: unit, startDate: startDate, endDate: now)
+            results[metric.rawValue] = values
         }
 
         if preferences.selectedMetrics.contains(HealthMetric.sonno.rawValue) {
-            let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
-            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: now, options: .strictStartDate)
-            let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
-
-            let sleepQuery = HKSampleQuery(sampleType: sleepType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { _, samples, error in
-                guard error == nil, let categorySamples = samples as? [HKCategorySample] else { return }
-
-                var sleepByDay: [String: Double] = [:]
-                for sample in categorySamples where sample.value == HKCategoryValueSleepAnalysis.asleepUnspecified.rawValue {
-                    let dateStr = self.formattedShortDate(sample.startDate)
-                    let duration = sample.endDate.timeIntervalSince(sample.startDate)
-                    sleepByDay[dateStr, default: 0] += duration
-                }
-
-                let sorted = sleepByDay.map { (key, value) in
-                    let totalMinutes = Int(value / 60)
-                    return ("\(totalMinutes)", key)
-                }.sorted { $0.1 < $1.1 }
-
-                results[HealthMetric.sonno.rawValue] = sorted
-            }
-
-            self.healthStore.execute(sleepQuery)
+            let sleepData = try await fetchCategorySamplesGroupedByDay(for: .sleepAnalysis, startDate: startDate, endDate: now)
+            results[HealthMetric.sonno.rawValue] = sleepData
         }
 
         if preferences.selectedMetrics.contains(HealthMetric.mindful.rawValue) {
-            let mindfulType = HKObjectType.categoryType(forIdentifier: .mindfulSession)!
-            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: now, options: .strictStartDate)
-            let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
-
-            let mindfulQuery = HKSampleQuery(sampleType: mindfulType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { _, samples, error in
-                guard error == nil, let categorySamples = samples as? [HKCategorySample] else { return }
-
-                var mindfulByDay: [String: Double] = [:]
-                for sample in categorySamples {
-                    let dateStr = self.formattedShortDate(sample.startDate)
-                    let duration = sample.endDate.timeIntervalSince(sample.startDate)
-                    mindfulByDay[dateStr, default: 0] += duration
-                }
-
-                let sorted = mindfulByDay.map { (key, value) in
-                    let totalMinutes = Int(value / 60)
-                    return ("\(totalMinutes)", key)
-                }.sorted { $0.1 < $1.1 }
-
-                results[HealthMetric.mindful.rawValue] = sorted
-            }
-
-            self.healthStore.execute(mindfulQuery)
+            let mindfulData = try await fetchCategorySamplesGroupedByDay(for: .mindfulSession, startDate: startDate, endDate: now)
+            results[HealthMetric.mindful.rawValue] = mindfulData
         }
 
         let filteredResults = results.filter { HealthMetric(rawValue: $0.key) != nil }
@@ -292,6 +198,9 @@ class HealthKitManager {
         }
     }
     
+    /// Recupera l'ultimo campione disponibile per una metrica di tipo `HKQuantityType`
+    /// - Parameter identifier: identificatore della metrica (es. .heartRate, .stepCount)
+    /// - Returns: il campione più recente (`HKQuantitySample`) o `nil` se non disponibile
     private func fetchMostRecentQuantitySample(for identifier: HKQuantityTypeIdentifier) async throws -> HKQuantitySample? {
         let sampleType = HKSampleType.quantityType(forIdentifier: identifier)!
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
@@ -309,6 +218,9 @@ class HealthKitManager {
         }
     }
 
+    /// Recupera l'ultimo campione disponibile per una metrica di tipo `HKCategoryType`
+    /// - Parameter identifier: identificatore della metrica (es. .sleepAnalysis, .mindfulSession)
+    /// - Returns: il campione più recente (`HKCategorySample`) o `nil` se non disponibile
     private func fetchMostRecentCategorySample(for identifier: HKCategoryTypeIdentifier) async throws -> HKCategorySample? {
         let sampleType = HKSampleType.categoryType(forIdentifier: identifier)!
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
@@ -325,6 +237,121 @@ class HealthKitManager {
             healthStore.execute(query)
         }
     }
+    
+    /// Recupera e aggrega i dati giornalieri per una metrica `HKQuantityType`
+    /// - Parameters:
+    ///   - identifier: identificatore della metrica (es. .stepCount)
+    ///   - unit: unità di misura da utilizzare per la conversione
+    ///   - startDate: inizio del periodo
+    ///   - endDate: fine del periodo
+    /// - Returns: array di tuple (valore, data stringa)
+    private func fetchQuantitySamplesGroupedByDay(for identifier: HKQuantityTypeIdentifier, unit: HKUnit, startDate: Date, endDate: Date) async throws -> [(value: String, dateString: String)] {
+        return try await withCheckedThrowingContinuation { continuation in
+            guard let quantityType = HKObjectType.quantityType(forIdentifier: identifier) else {
+                continuation.resume(returning: [])
+                return
+            }
+
+            let calendar = Calendar.current
+            let anchorDate = calendar.startOfDay(for: Date())
+            let interval = DateComponents(day: 1)
+
+            let options: HKStatisticsOptions = {
+                switch identifier {
+                case .heartRate, .heartRateVariabilitySDNN:
+                    return .discreteAverage
+                default:
+                    return .cumulativeSum
+                }
+            }()
+
+            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+
+            let query = HKStatisticsCollectionQuery(
+                quantityType: quantityType,
+                quantitySamplePredicate: predicate,
+                options: options,
+                anchorDate: anchorDate,
+                intervalComponents: interval
+            )
+
+            query.initialResultsHandler = { _, collection, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+
+                var values: [(value: String, dateString: String)] = []
+                collection?.enumerateStatistics(from: startDate, to: endDate) { stats, _ in
+                    let dateStr = self.formattedShortDate(stats.startDate)
+                    let value = (options == .discreteAverage) ?
+                        stats.averageQuantity()?.doubleValue(for: unit) :
+                        stats.sumQuantity()?.doubleValue(for: unit)
+
+                    if let val = value {
+                        let formatted = identifier == .distanceWalkingRunning
+                            ? String(format: "%.2f", val)
+                            : "\(Int(val))"
+                        values.append((formatted, dateStr))
+                    } else {
+                        values.append(("0", dateStr))
+                    }
+                }
+
+                continuation.resume(returning: values)
+            }
+
+            self.healthStore.execute(query)
+        }
+    }
+
+    /// Recupera e aggrega i dati giornalieri per una metrica `HKCategoryType`
+    /// - Parameters:
+    ///   - identifier: identificatore della metrica (es. .sleepAnalysis)
+    ///   - startDate: data di inizio del range
+    ///   - endDate: data di fine del range
+    /// - Returns: array di tuple (valore in minuti, data stringa)
+    private func fetchCategorySamplesGroupedByDay(for identifier: HKCategoryTypeIdentifier, startDate: Date, endDate: Date) async throws -> [(value: String, dateString: String)] {
+        return try await withCheckedThrowingContinuation { continuation in
+            let categoryType = HKObjectType.categoryType(forIdentifier: identifier)!
+            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+            let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
+
+            let query = HKSampleQuery(sampleType: categoryType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { _, samples, error in
+                guard error == nil, let categorySamples = samples as? [HKCategorySample] else {
+                    continuation.resume(returning: [])
+                    return
+                }
+
+                var byDay: [String: Double] = [:]
+                for sample in categorySamples {
+                    let dateStr = self.formattedShortDate(sample.startDate)
+                    let duration = sample.endDate.timeIntervalSince(sample.startDate)
+                    byDay[dateStr, default: 0] += duration
+                }
+
+                let sorted: [(value: String, dateString: String)] = byDay.map { (key, value) in
+                    switch identifier {
+                    case .sleepAnalysis:
+                        let totalMinutes = Int(value / 60)
+                        let hours = totalMinutes / 60
+                        let minutes = totalMinutes % 60
+                        let formatted = String(format: "%d.%02d", hours, minutes)
+                        return (formatted, key)
+                    case .mindfulSession:
+                        let totalMinutes = "\(Int(value / 60))"
+                        return (totalMinutes, key)
+                    default:
+                        return ("0", key)
+                    }
+                }.sorted { $0.1 < $1.1 }
+
+                continuation.resume(returning: sorted)
+            }
+
+            self.healthStore.execute(query)
+        }
+    }
 
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -338,4 +365,5 @@ class HealthKitManager {
         formatter.dateFormat = "dd/MM"
         return formatter.string(from: date)
     }
+    
 }

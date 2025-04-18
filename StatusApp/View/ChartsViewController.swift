@@ -10,11 +10,13 @@ import DGCharts
 
 class ChartsViewController: UIViewController, Loadable {
     private let referenceValues: [String: Double] = [
-        "Passi": 7000, //numero di passi
-        "Frequenza Cardiaca": 80, //bpm
-        "HRV": 60, //millis
-        "Distanza": 6000, //metri
-        "Energia Attiva": 600 //kcal
+        HealthMetric.passi.rawValue: 7000, //numero di passi
+        HealthMetric.frequenzaCardiaca.rawValue: 80, //bpm
+        HealthMetric.hrv.rawValue: 60, //millis
+        HealthMetric.distanza.rawValue: 6000, //metri
+        HealthMetric.energiaAttiva.rawValue: 600 ,//kcal
+        HealthMetric.sonno.rawValue: 7, //ore
+        HealthMetric.mindful.rawValue: 1 //min
     ]
     
     private let scrollView = UIScrollView()
@@ -24,7 +26,7 @@ class ChartsViewController: UIViewController, Loadable {
         super.viewDidLoad()
         
         view.backgroundColor = AppColor.backgroundColor
-        title = "Grafici"
+        title = NSLocalizedString("charts", comment: "")
         
         setupStackView()
     }
@@ -34,7 +36,7 @@ class ChartsViewController: UIViewController, Loadable {
         view.addSubview(scrollView)
 
         stackView.axis = .vertical
-        stackView.spacing = 24
+        stackView.spacing = Constants.APP_MARGIN*2
         stackView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(stackView)
 
@@ -61,14 +63,15 @@ class ChartsViewController: UIViewController, Loadable {
         }
 
         for metricData in metrics {
-            let chartView = createChartView(for: metricData.metric.rawValue, with: metricData.values.map { (value: $0.value, dateString: $0.date) })
+            print("Sto creando il grafico per: \(metricData.metric.rawValue)")
+            let chartView = createChartView(for: metricData.metric, with: metricData.values.map { (value: $0.value, dateString: $0.date) }, showReferenceLine:true)
             DispatchQueue.main.async {
                 self.stackView.addArrangedSubview(chartView)
             }
         }
     }
 
-    private func createChartView(for metricName: String, with values: [(value: String, dateString: String)]) -> UIView {
+    internal func createChartView(for metric: HealthMetric, with values: [(value: String, dateString: String)], showReferenceLine: Bool) -> UIView {
         var entries: [BarChartDataEntry] = []
         var labels: [String] = []
 
@@ -80,122 +83,160 @@ class ChartsViewController: UIViewController, Loadable {
         }
         
         if entries.isEmpty {
-            return makeEmptyChartView(for: metricName)
+            return makeEmptyChartView(for: metric.rawValue)
         }
 
         let chartView: ChartViewBase
 
-        switch metricName {
-        case HealthMetric.passi.rawValue, HealthMetric.distanza.rawValue:
-            chartView = createHorizontalBarChart(entries: entries, labels: labels)
-        case HealthMetric.frequenzaCardiaca.rawValue, HealthMetric.hrv.rawValue:
-            chartView = createLineChart(entries: entries, labels: labels)
+        switch metric {
+        case .passi, .distanza:
+            chartView = createHorizontalBarChart(entries: entries, labels: labels, metric: metric)
+        case .frequenzaCardiaca, .hrv:
+            chartView = createLineChart(entries: entries, labels: labels, metric: metric)
         default:
-            chartView = createDefaultBarChart(entries: entries, labels: labels)
+            chartView = createDefaultBarChart(entries: entries, labels: labels, metric: metric)
         }
 
-        configureReferenceLine(for: chartView, metricName: metricName)
-        setupLegened(chart: chartView, metricName: metricName)
-
-        return wrapChartWithTitle(chartView, title: metricName)
+        if showReferenceLine {
+            //setup valore campion
+            configureReferenceLine(for: chartView, metric: metric)
+        }
+        
+        return wrapChartWithTitle(chartView, title: metric.rawValue, unitMetric: metric.unit)
     }
     
-    private func configureReferenceLine(for chartView: ChartViewBase, metricName: String) {
-        guard let riferimento = referenceValues[metricName],
+    private func configureReferenceLine(for chartView: ChartViewBase, metric: HealthMetric) {
+        guard let riferimento = referenceValues[metric.rawValue],
               let chart = chartView as? BarLineChartViewBase else { return }
 
-        let lineaCampione = ChartLimitLine(limit: riferimento, label: "Valore di riferimento")
+        let lineaCampione = ChartLimitLine(limit: riferimento, label: NSLocalizedString("mid_reference", comment: ""))
         lineaCampione.lineColor = .systemRed
         lineaCampione.lineWidth = 1
-        lineaCampione.lineDashLengths = [4, 2]
-        lineaCampione.valueFont = AppFont.info
-        lineaCampione.valueTextColor = .white
+        lineaCampione.lineDashLengths = [6, 3]
+        lineaCampione.valueFont = AppFont.italicInfo
+        lineaCampione.valueTextColor = AppColor.primaryText
 
         
-        switch metricName {
-        case "Passi", "Distanza":
+        switch metric {
+        case .passi, .distanza:
             lineaCampione.labelPosition = .rightBottom
-        case "Frequenza Cardiaca", "HRV":
-            lineaCampione.labelPosition = .leftTop
         default:
-            lineaCampione.labelPosition = .rightTop
+            lineaCampione.labelPosition = .leftTop
         }
 
         chart.leftAxis.addLimitLine(lineaCampione)
-
-        chart.rightAxis.enabled = false
-        chart.leftAxis.drawAxisLineEnabled = false
-        chart.leftAxis.drawGridLinesEnabled = false
-        chart.xAxis.drawGridLinesEnabled = false
     }
 
-    private func createHorizontalBarChart(entries: [BarChartDataEntry], labels: [String]) -> ChartViewBase {
+    private func createHorizontalBarChart(entries: [BarChartDataEntry], labels: [String], metric: HealthMetric) -> ChartViewBase {
         let chart = HorizontalBarChartView()
         let dataSet = BarChartDataSet(entries: entries)
-        dataSet.colors = [ AppColor.primaryIcon] // colore personalizzato per le colonne
+        dataSet.colors = [metric.color] // colore personalizzato per le colonne
         chart.data = BarChartData(dataSet: dataSet)
-        configureCommonChartProperties(chart: chart, labels: labels)
+        chart.legend.enabled = false
+        configureCommonChartProperties(chart: chart, labels: labels, metricName: metric.rawValue)
         return chart
     }
     
-    private func createLineChart(entries: [BarChartDataEntry], labels: [String]) -> ChartViewBase {
+    private func createLineChart(entries: [BarChartDataEntry], labels: [String], metric: HealthMetric) -> ChartViewBase {
         let lineChart = LineChartView()
 
         let lineDataSet = LineChartDataSet(entries: entries)
-        lineDataSet.colors = [ AppColor.primaryIcon]// Colore linea
-        lineDataSet.circleColors =  [ AppColor.primaryIcon] // Colore dei cerchi
-        lineDataSet.valueColors = [ AppColor.primaryIcon]
+        lineDataSet.colors = [metric.color] // Colore linea
+        lineDataSet.circleColors =  [metric.color] // Colore dei cerchi
+        lineDataSet.valueColors = [metric.color]
         lineDataSet.valueTextColor = AppColor.primaryText
         lineDataSet.mode = .linear
         lineDataSet.drawFilledEnabled = true
         lineDataSet.fillAlpha = 0.5
-        lineDataSet.fillColor = AppColor.primaryText
+        lineDataSet.fillColor = metric.color
         lineDataSet.drawCirclesEnabled = true
         lineDataSet.circleRadius = 6.0
 
         lineChart.data = LineChartData(dataSet: lineDataSet)
-        configureCommonChartProperties(chart: lineChart, labels: labels)
+        lineChart.legend.enabled = false
+        configureCommonChartProperties(chart: lineChart, labels: labels, metricName: metric.rawValue)
         return lineChart
     }
 
-    private func createDefaultBarChart(entries: [BarChartDataEntry], labels: [String]) -> ChartViewBase {
+    private func createDefaultBarChart(entries: [BarChartDataEntry], labels: [String], metric: HealthMetric) -> ChartViewBase {
         let barChart = BarChartView()
         let dataSet = BarChartDataSet(entries: entries)
-        dataSet.colors =  [ AppColor.primaryIcon] // colore personalizzato per le colonne
+        dataSet.colors =  [metric.color] // colore personalizzato per le colonne
         barChart.data = BarChartData(dataSet: dataSet)
-        configureCommonChartProperties(chart: barChart, labels: labels)
+        barChart.rightAxis.enabled = false
+        barChart.legend.enabled = false
+        configureCommonChartProperties(chart: barChart, labels: labels, metricName: metric.rawValue)
         return barChart
     }
 
-    private func wrapChartWithTitle(_ chart: ChartViewBase, title: String) -> UIView {
+    private func wrapChartWithTitle(_ chart: ChartViewBase, title: String, unitMetric: String) -> UIView {
+
         let titleLabel = UILabel()
         titleLabel.text = title
-        titleLabel.font = AppFont.primary
+        titleLabel.font = AppFont.title
         titleLabel.textColor = AppColor.primaryText
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let infoLabel = UILabel()
+        infoLabel.text = NSLocalizedString("last_7gg_data", comment: "")
+        infoLabel.font = AppFont.info
+        infoLabel.textColor = AppColor.primaryText
+        infoLabel.numberOfLines = 0
+        infoLabel.textAlignment = .left
+        
+        let unitLabel = UILabel()
+        unitLabel.font = AppFont.info
+        let fullText = String(format: NSLocalizedString("data_with_unit", comment: ""), unitMetric)
+        let attributedText = NSMutableAttributedString(string: fullText)
 
-        let container = UIStackView(arrangedSubviews: [titleLabel, chart])
+        if let range = fullText.range(of: unitMetric) {
+            let nsRange = NSRange(range, in: fullText)
+            attributedText.addAttribute(.font, value: AppFont.italicDescription, range: nsRange)
+        }
+
+        unitLabel.attributedText = attributedText
+        unitLabel.textColor = AppColor.primaryText
+        unitLabel.numberOfLines = 0
+        unitLabel.textAlignment = .left
+
+        let container = UIStackView(arrangedSubviews: [titleLabel, chart, infoLabel, unitLabel])
         container.axis = .vertical
         container.spacing = 8
+        container.setCustomSpacing(4, after: infoLabel)
         return container
     }
 
     private func makeEmptyChartView(for metric: String) -> UIView {
         let label = UILabel()
-        label.text = "Nessun dato disponibile per \"\(metric)\""
-        label.font = AppFont.primary
+        label.text = String(format: NSLocalizedString("no_data", comment: ""), metric)
+        label.font = AppFont.info
         label.textColor = AppColor.primaryText
         label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
 
+        
+        let imageNoResult = UIImageView(image: UIImage(systemName: "magnifyingglass"))
+        imageNoResult.tintColor = AppColor.primaryIcon
+        imageNoResult.translatesAutoresizingMaskIntoConstraints = false
+        imageNoResult.contentMode = .scaleAspectFit
+        
+       
         let container = UIView()
-        container.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        container.addSubview(imageNoResult)
         container.addSubview(label)
 
+        container.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
+            container.heightAnchor.constraint(equalToConstant: 100),
+            imageNoResult.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            imageNoResult.topAnchor.constraint(equalTo: container.topAnchor, constant: 32),
+            imageNoResult.heightAnchor.constraint(equalToConstant: 40),
+            imageNoResult.widthAnchor.constraint(equalToConstant: 40),
+            
+            label.topAnchor.constraint(equalTo: imageNoResult.bottomAnchor, constant: 8),
             label.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: container.centerYAnchor),
             label.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: 16),
             label.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor, constant: -16)
         ])
@@ -203,46 +244,32 @@ class ChartsViewController: UIViewController, Loadable {
         return container
     }
     
-    private func setupLegened(chart: ChartViewBase, metricName: String) {
-        let unit: String
-        switch metricName {
-        case "Passi":
-            unit = "Dati riportati in numero"
-        case "Frequenza Cardiaca":
-            unit = "Dati riportati in BPM"
-        case "HRV":
-            unit = "Dati riportati in ms"
-        case "Sonno":
-            unit = "Dati riportati in ore"
-        case "Distanza":
-            unit = "Dati riportati in m"
-        case "Energia Attiva":
-            unit = "Dati riportati in kcal"
-        default:
-            unit = "Dati riportati in min"
-        }
-
-        let legendEntries: [LegendEntry] = [
-            LegendEntry(label: "Dati raccolti negli ultimi 7 giorni"),
-            LegendEntry(label: unit)
-        ]
-        
-        chart.legend.setCustom(entries: legendEntries)
-        chart.legend.enabled = true
-        chart.legend.horizontalAlignment = .left
-        chart.legend.verticalAlignment = .bottom
-        chart.legend.orientation = .horizontal
-        chart.legend.drawInside = false
-        chart.legend.font = AppFont.info
-        chart.legend.textColor = AppColor.primaryText
-    }
-    
-    private func configureCommonChartProperties(chart: BarLineChartViewBase, labels: [String]) {
+    private func configureCommonChartProperties(chart: BarLineChartViewBase, labels: [String], metricName:String) {
         chart.translatesAutoresizingMaskIntoConstraints = false
         chart.heightAnchor.constraint(equalToConstant: 300).isActive = true
+
         chart.xAxis.valueFormatter = IndexAxisValueFormatter(values: labels)
         chart.xAxis.granularity = 1
         chart.xAxis.labelPosition = .bottom
+        chart.setExtraOffsets(left: 0, top: 16, right: 16, bottom: 0)
+        
+        if metricName == HealthMetric.sonno.rawValue {
+            chart.leftAxis.axisMinimum = 0
+            chart.leftAxis.axisMaximum = 11
+            chart.leftAxis.granularity = 1
+            chart.leftAxis.granularityEnabled = true
+        } else if metricName == HealthMetric.mindful.rawValue {
+            chart.leftAxis.axisMinimum = 0
+            chart.leftAxis.axisMaximum = 3
+            chart.leftAxis.granularity = 1
+            chart.leftAxis.granularityEnabled = true
+        }
+        
+        chart.rightAxis.enabled = false
+        chart.leftAxis.drawAxisLineEnabled = false
+        chart.leftAxis.drawGridLinesEnabled = false
+        chart.xAxis.drawGridLinesEnabled = false
+        
         chart.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeOutQuart)
     }
 }
