@@ -16,7 +16,7 @@ struct MetricValue {
     let value: String
 }
 
-enum HealthMetric: String {
+enum HealthMetric: String, CaseIterable {
     case passi = "Passi"
     case frequenzaCardiaca = "Frequenza Cardiaca"
     case hrv = "HRV"
@@ -27,12 +27,13 @@ enum HealthMetric: String {
     
     var unit: String {
         switch self {
-        case .passi: return "passi"
-        case .frequenzaCardiaca: return "BPM"
-        case .hrv: return "ms"
-        case .distanza: return "km"
-        case .energiaAttiva: return "kcal"
-        case .sonno, .mindful: return "minuti"
+        case .passi: return NSLocalizedString("steps_lowercase", comment: "")
+        case .frequenzaCardiaca: return NSLocalizedString("BPM", comment: "")
+        case .hrv: return NSLocalizedString("ms", comment: "")
+        case .distanza: return NSLocalizedString("m", comment: "")
+        case .energiaAttiva: return NSLocalizedString("kcal", comment: "")
+        case .sonno: return NSLocalizedString("ore", comment: "")
+        case .mindful: return NSLocalizedString("min", comment: "")
         }
     }
     
@@ -59,4 +60,154 @@ enum HealthMetric: String {
         case .mindful: return AppColor.mentalIconColor
         }
     }
+    
+    var attributedDescription: NSAttributedString {
+        let titleFont = AppFont.title
+        let bodyFont = AppFont.description
+        let color = AppColor.primaryText
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 12
+
+        let attributed = NSMutableAttributedString()
+
+        switch self {
+        case .passi:
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_passi_title1", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_passi_body1", comment: "") + "\n\n", attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_passi_title2", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_passi_body2", comment: ""), attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+        case .frequenzaCardiaca:
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_frequenzaCardiaca_title1", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_frequenzaCardiaca_body1", comment: "") + "\n\n", attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_frequenzaCardiaca_title2", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_frequenzaCardiaca_body2", comment: ""), attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+        case .hrv:
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_hrv_title1", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_hrv_body1", comment: "") + "\n\n", attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_hrv_title2", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_hrv_body2", comment: ""), attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+        case .distanza:
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_distanza_title1", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_distanza_body1", comment: "") + "\n\n", attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_distanza_title2", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_distanza_body2", comment: ""), attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+        case .energiaAttiva:
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_energiaAttiva_title1", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_energiaAttiva_body1", comment: "") + "\n\n", attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_energiaAttiva_title2", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_energiaAttiva_body2", comment: ""), attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+        case .sonno:
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_sonno_title1", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_sonno_body1", comment: "") + "\n\n", attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_sonno_title2", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_sonno_body2", comment: ""), attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+        case .mindful:
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_mindful_title1", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_mindful_body1", comment: "") + "\n\n", attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_mindful_title2", comment: "") + "\n", attributes: [
+                .font: titleFont,
+                .foregroundColor: color
+            ]))
+            attributed.append(NSAttributedString(string: NSLocalizedString("metric_mindful_body2", comment: ""), attributes: [
+                .font: bodyFont,
+                .foregroundColor: color,
+                .paragraphStyle: paragraphStyle
+            ]))
+        }
+
+        return attributed
+    }
+
 }

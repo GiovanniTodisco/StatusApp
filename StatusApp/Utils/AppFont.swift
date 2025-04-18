@@ -20,8 +20,28 @@ enum AppFont {
         return UIFont.systemFont(ofSize: Constants.WELCOME_SIZE, weight: .bold)
     }
     
+    static var info: UIFont {
+        return UIFont.systemFont(ofSize: Constants.DESCRIPTION_TEXT_SIZE, weight: .semibold)
+    }
+    
     static var description: UIFont {
         return UIFont.systemFont(ofSize: Constants.DESCRIPTION_TEXT_SIZE, weight: .regular)
+    }
+    
+    static var italicDescription: UIFont {
+        let descriptor = UIFontDescriptor
+            .preferredFontDescriptor(withTextStyle: .body)
+            .withSymbolicTraits([.traitItalic, .traitBold])
+
+        return UIFont(descriptor: descriptor!, size: Constants.DESCRIPTION_TEXT_SIZE)
+    }
+    
+    static var italicInfo: UIFont {
+        let descriptor = UIFontDescriptor
+            .preferredFontDescriptor(withTextStyle: .body)
+            .withSymbolicTraits([.traitItalic, .traitBold])
+
+        return UIFont(descriptor: descriptor!, size: Constants.CAMPIONE_TEXT_SIZE)
     }
 
     static var appName: UIFont {
@@ -37,11 +57,6 @@ enum AppFont {
         return custom("AvenirNextCyr-Regular", size: Constants.PRIMARY_TEXT_SIZE)
     }
     
-    
-    static var info: UIFont {
-        return custom("AvenirNextCyr-ThinItalic", size: Constants.DESCRIPTION_TEXT_SIZE)
-    }
-
     static var button: UIFont {
         return custom("AvenirNextCyr-Medium", size: Constants.BUTTON_TEXT_SIZE)
     }
