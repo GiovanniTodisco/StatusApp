@@ -27,7 +27,6 @@
 		659302D62DAA7A1B00F586C7 /* ChartsPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659302D52DAA7A1B00F586C7 /* ChartsPreferences.swift */; };
 		659302D82DAA806A00F586C7 /* HealthMetricData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659302D72DAA806A00F586C7 /* HealthMetricData.swift */; };
 		65A2C7302D9C4F4E0055F2A8 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CD5C952D9C4AB700F2CEB0 /* ResearchKit.framework */; };
-		65A342E62DA2E450009FC844 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A342E52DA2E450009FC844 /* MainTabBarController.swift */; };
 		65A342EB2DA2E5A8009FC844 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A342EA2DA2E5A8009FC844 /* HomeViewController.swift */; };
 		65A342ED2DA2E5B5009FC844 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A342EC2DA2E5B5009FC844 /* ChartsViewController.swift */; };
 		65A342EF2DA2E5BD009FC844 /* SurveysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A342EE2DA2E5BD009FC844 /* SurveysViewController.swift */; };
@@ -57,10 +56,19 @@
 		65BD8D252DA03FB0002B1DE9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BD8D242DA03FB0002B1DE9 /* Constants.swift */; };
 		65BD8D262DA04838002B1DE9 /* welcome.json in Resources */ = {isa = PBXBuildFile; fileRef = 65BD8D1D2DA03B26002B1DE9 /* welcome.json */; };
 		65C0E6832DA280CF005BB1DF /* CustomPersonalDataStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C0E6822DA280CF005BB1DF /* CustomPersonalDataStepViewController.swift */; };
+		65C11F782DB3D4340013ABB0 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C11F762DB3D4340013ABB0 /* MainTabBarController.swift */; };
+		65C11F7A2DB3D5B40013ABB0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C11F792DB3D5B40013ABB0 /* HomeView.swift */; };
+		65C11F7C2DB3DC320013ABB0 /* ChartDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C11F7B2DB3DC320013ABB0 /* ChartDetailView.swift */; };
+		65C11F7E2DB3DEFB0013ABB0 /* MetricInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C11F7D2DB3DEFB0013ABB0 /* MetricInfoView.swift */; };
+		65C11F802DB3F1470013ABB0 /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C11F7F2DB3F1470013ABB0 /* ChartsView.swift */; };
+		65C11F832DB3FBEE0013ABB0 /* SurveysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C11F822DB3FBEE0013ABB0 /* SurveysView.swift */; };
 		65CD5C8E2D9C482600F2CEB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CD5C842D9C482600F2CEB0 /* AppDelegate.swift */; };
 		65CD5C902D9C482600F2CEB0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CD5C8C2D9C482600F2CEB0 /* SceneDelegate.swift */; };
 		65CD5C912D9C482600F2CEB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65CD5C852D9C482600F2CEB0 /* Assets.xcassets */; };
 		65CD5C932D9C482600F2CEB0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65CD5C882D9C482600F2CEB0 /* LaunchScreen.storyboard */; };
+		65F79CC82DB2B6AB000302B3 /* CareKit in Frameworks */ = {isa = PBXBuildFile; productRef = 65F79CC72DB2B6AB000302B3 /* CareKit */; };
+		65F79CCA2DB2B6AB000302B3 /* CareKitStore in Frameworks */ = {isa = PBXBuildFile; productRef = 65F79CC92DB2B6AB000302B3 /* CareKitStore */; };
+		65F79CCC2DB2B6AB000302B3 /* CareKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 65F79CCB2DB2B6AB000302B3 /* CareKitUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,7 +93,6 @@
 		65867E992DB15ECC004442FB /* walking_more_info.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = walking_more_info.json; sourceTree = "<group>"; };
 		659302D52DAA7A1B00F586C7 /* ChartsPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsPreferences.swift; sourceTree = "<group>"; };
 		659302D72DAA806A00F586C7 /* HealthMetricData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthMetricData.swift; sourceTree = "<group>"; };
-		65A342E52DA2E450009FC844 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		65A342EA2DA2E5A8009FC844 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		65A342EC2DA2E5B5009FC844 /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
 		65A342EE2DA2E5BD009FC844 /* SurveysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveysViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +122,12 @@
 		65BD8D222DA03F8E002B1DE9 /* AppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFont.swift; sourceTree = "<group>"; };
 		65BD8D242DA03FB0002B1DE9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		65C0E6822DA280CF005BB1DF /* CustomPersonalDataStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPersonalDataStepViewController.swift; sourceTree = "<group>"; };
+		65C11F762DB3D4340013ABB0 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		65C11F792DB3D5B40013ABB0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		65C11F7B2DB3DC320013ABB0 /* ChartDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDetailView.swift; sourceTree = "<group>"; };
+		65C11F7D2DB3DEFB0013ABB0 /* MetricInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricInfoView.swift; sourceTree = "<group>"; };
+		65C11F7F2DB3F1470013ABB0 /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		65C11F822DB3FBEE0013ABB0 /* SurveysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveysView.swift; sourceTree = "<group>"; };
 		65CD5C4C2D9C3C3F00F2CEB0 /* StatusApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StatusApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65CD5C842D9C482600F2CEB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65CD5C852D9C482600F2CEB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -130,6 +143,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F79CCA2DB2B6AB000302B3 /* CareKitStore in Frameworks */,
+				65F79CC82DB2B6AB000302B3 /* CareKit in Frameworks */,
+				65F79CCC2DB2B6AB000302B3 /* CareKitUI in Frameworks */,
 				65A2C7302D9C4F4E0055F2A8 /* ResearchKit.framework in Frameworks */,
 				4E48A0F07D1E79ABADC76D76 /* Pods_StatusApp.framework in Frameworks */,
 			);
@@ -183,14 +199,10 @@
 		65A342E72DA2E52D009FC844 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				65408E582DB01F72006CDF39 /* MetricInfoViewController.swift */,
-				65408E562DB015A9006CDF39 /* ChartDetailViewController.swift */,
-				65201C742DA4383900775CFC /* SplashViewController.swift */,
-				65A342F02DA2E5C5009FC844 /* ProfileViewController.swift */,
-				65A342EE2DA2E5BD009FC844 /* SurveysViewController.swift */,
-				65A342EC2DA2E5B5009FC844 /* ChartsViewController.swift */,
-				65A342EA2DA2E5A8009FC844 /* HomeViewController.swift */,
-				65A342E52DA2E450009FC844 /* MainTabBarController.swift */,
+				65C11F812DB3F6C00013ABB0 /* Charts */,
+				65C11F822DB3FBEE0013ABB0 /* SurveysView.swift */,
+				65C11F7D2DB3DEFB0013ABB0 /* MetricInfoView.swift */,
+				65C11F792DB3D5B40013ABB0 /* HomeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -208,6 +220,7 @@
 		65A342E92DA2E562009FC844 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				65C11F772DB3D4340013ABB0 /* ViewControllers */,
 				65403F512DA2C1D80050047A /* Managers */,
 			);
 			path = Controller;
@@ -304,6 +317,30 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		65C11F772DB3D4340013ABB0 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				65C11F762DB3D4340013ABB0 /* MainTabBarController.swift */,
+				65A342EA2DA2E5A8009FC844 /* HomeViewController.swift */,
+				65408E562DB015A9006CDF39 /* ChartDetailViewController.swift */,
+				65408E582DB01F72006CDF39 /* MetricInfoViewController.swift */,
+				65201C742DA4383900775CFC /* SplashViewController.swift */,
+				65A342F02DA2E5C5009FC844 /* ProfileViewController.swift */,
+				65A342EC2DA2E5B5009FC844 /* ChartsViewController.swift */,
+				65A342EE2DA2E5BD009FC844 /* SurveysViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		65C11F812DB3F6C00013ABB0 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				65C11F7F2DB3F1470013ABB0 /* ChartsView.swift */,
+				65C11F7B2DB3DC320013ABB0 /* ChartDetailView.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
 		65CD5C432D9C3C3F00F2CEB0 = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +423,9 @@
 			);
 			mainGroup = 65CD5C432D9C3C3F00F2CEB0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				65F79CC62DB2B6AB000302B3 /* XCRemoteSwiftPackageReference "CareKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 65CD5C4D2D9C3C3F00F2CEB0 /* Products */;
 			projectDirPath = "";
@@ -483,6 +523,8 @@
 			files = (
 				653524A32DA145F0004C0372 /* CustomConsentReviewStepViewController.swift in Sources */,
 				65BD8D252DA03FB0002B1DE9 /* Constants.swift in Sources */,
+				65C11F782DB3D4340013ABB0 /* MainTabBarController.swift in Sources */,
+				65C11F7A2DB3D5B40013ABB0 /* HomeView.swift in Sources */,
 				65A342F12DA2E5C5009FC844 /* ProfileViewController.swift in Sources */,
 				65403F4F2DA28F3F0050047A /* UserProfile.swift in Sources */,
 				65A342ED2DA2E5B5009FC844 /* ChartsViewController.swift in Sources */,
@@ -493,18 +535,21 @@
 				65BD8D212DA03E9E002B1DE9 /* AppColor.swift in Sources */,
 				65BD8D232DA03F8E002B1DE9 /* AppFont.swift in Sources */,
 				65CD5C8E2D9C482600F2CEB0 /* AppDelegate.swift in Sources */,
+				65C11F832DB3FBEE0013ABB0 /* SurveysView.swift in Sources */,
 				653524A12DA12BF2004C0372 /* CustomConsentInfoStepViewController.swift in Sources */,
 				65201C752DA4383900775CFC /* SplashViewController.swift in Sources */,
 				65408E572DB015A9006CDF39 /* ChartDetailViewController.swift in Sources */,
 				65408E592DB01F72006CDF39 /* MetricInfoViewController.swift in Sources */,
 				65403F532DA2C1E80050047A /* HealthKitManager.swift in Sources */,
+				65C11F802DB3F1470013ABB0 /* ChartsView.swift in Sources */,
+				65C11F7C2DB3DC320013ABB0 /* ChartDetailView.swift in Sources */,
 				659302D62DAA7A1B00F586C7 /* ChartsPreferences.swift in Sources */,
 				65C0E6832DA280CF005BB1DF /* CustomPersonalDataStepViewController.swift in Sources */,
+				65C11F7E2DB3DEFB0013ABB0 /* MetricInfoView.swift in Sources */,
 				65BD8CF72DA03A40002B1DE9 /* CustomIntroStepViewController.swift in Sources */,
 				65BD8CF52DA03A23002B1DE9 /* OnboardingViewController.swift in Sources */,
 				65CD5C902D9C482600F2CEB0 /* SceneDelegate.swift in Sources */,
 				65BD8CF32DA03A18002B1DE9 /* OnboardingTaskFactory.swift in Sources */,
-				65A342E62DA2E450009FC844 /* MainTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,6 +796,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		65F79CC62DB2B6AB000302B3 /* XCRemoteSwiftPackageReference "CareKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/carekit-apple/CareKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		65F79CC72DB2B6AB000302B3 /* CareKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65F79CC62DB2B6AB000302B3 /* XCRemoteSwiftPackageReference "CareKit" */;
+			productName = CareKit;
+		};
+		65F79CC92DB2B6AB000302B3 /* CareKitStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65F79CC62DB2B6AB000302B3 /* XCRemoteSwiftPackageReference "CareKit" */;
+			productName = CareKitStore;
+		};
+		65F79CCB2DB2B6AB000302B3 /* CareKitUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65F79CC62DB2B6AB000302B3 /* XCRemoteSwiftPackageReference "CareKit" */;
+			productName = CareKitUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 65CD5C442D9C3C3F00F2CEB0 /* Project object */;
 }
