@@ -13,17 +13,27 @@ import UserNotifications
 
 class SurveysViewController: UIViewController, ORKTaskViewControllerDelegate {
 
+    private let surveysView = SurveysView()
     let store: OCKStore = .init(name: "CareKitStore", type: .inMemory)
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(surveysView)
+        surveysView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            surveysView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.APP_MARGIN),
+            surveysView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            surveysView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            surveysView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+        ])
         view.backgroundColor = AppColor.backgroundColor
         title = NSLocalizedString("survey", comment: "")
         addDailySurveyTask()
     }
 
     func addDailySurveyTask() {
-        let schedule = OCKSchedule.dailyAtTime(hour: 11, minutes: 4, start: Date(), end: nil, text: nil)
+        let startDate = Calendar.current.date(byAdding: .day, value: -6, to: Date())!
+        let schedule = OCKSchedule.dailyAtTime(hour: 8, minutes: 0, start: startDate, end: nil, text: nil)
         let task = OCKTask(id: "dailySurvey", title: "Sondaggio Giornaliero", carePlanID: nil, schedule: schedule)
         store.addTask(task, callbackQueue: .main) { result in
             switch result {
@@ -35,9 +45,58 @@ class SurveysViewController: UIViewController, ORKTaskViewControllerDelegate {
         }
     }
 
+    func loadSurveyStatuses(animated: Bool = false) {
+        let today = Calendar.current.startOfDay(for: Date())
+        let calendar = Calendar.current
+        var statuses: [SurveyDayStatus] = []
+        let group = DispatchGroup()
+
+        for i in 0..<7 {
+            let date = calendar.date(byAdding: .day, value: -i, to: today)!
+            let query = OCKEventQuery(for: date)
+            group.enter()
+
+            store.fetchEvents(taskID: "dailySurvey", query: query, callbackQueue: .main) { result in
+                defer { group.leave() }
+                switch result {
+                case .success(let events):
+                    if let event = events.first {
+                        let completed = event.outcome != nil
+                        let mood = event.outcome?.values.first(where: { $0.kind == "mood" })?.integerValue
+                        let energy = event.outcome?.values.first(where: { $0.kind == "energy" })?.integerValue
+
+                        let status = SurveyDayStatus(date: date, completed: completed, mood: mood, energy: energy)
+                        statuses.append(status)
+                    }
+                case .failure(let error):
+                    print("Errore fetch eventi: \(error)")
+                }
+            }
+        }
+
+        group.notify(queue: .main) {
+            let sorted = statuses.sorted { $0.date > $1.date }
+            if let surveysView = self.view.subviews.compactMap({ $0 as? SurveysView }).first {
+                if animated {
+                    UIView.transition(with: surveysView.collectionView,
+                                      duration: 0.3,
+                                      options: .transitionCrossDissolve,
+                                      animations: {
+                                          surveysView.update(with: sorted)
+                                      },
+                                      completion: nil)
+                } else {
+                    surveysView.update(with: sorted)
+                }
+            }
+        }
+    }
+
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkCareKitSurvey()
+        loadSurveyStatuses()
     }
 
     func checkCareKitSurvey() {
@@ -138,7 +197,9 @@ class SurveysViewController: UIViewController, ORKTaskViewControllerDelegate {
                         let outcome = OCKOutcome(taskID: event.task.localDatabaseID!,
                                                  taskOccurrenceIndex: event.scheduleEvent.occurrence,
                                                  values: outcomeValues)
-                        self.store.addOutcome(outcome, callbackQueue: .main) { _ in }
+                        self.store.addOutcome(outcome, callbackQueue: .main) { _ in
+                            self.loadSurveyStatuses(animated: true)
+                        }
                     }
                 case .failure(let error):
                     print("Errore outcome: \(error)")
