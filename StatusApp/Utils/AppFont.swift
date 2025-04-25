@@ -43,21 +43,12 @@ enum AppFont {
 
         return UIFont(descriptor: descriptor!, size: Constants.CAMPIONE_TEXT_SIZE)
     }
-
-    static var appName: UIFont {
-        return custom("AvenirNextCyr-Bold", size: Constants.APP_NAME_SIZE)
-    }
-
-    static var titleIntro: UIFont {
-        return custom("AvenirNextCyr-Bold", size: Constants.TITLE_SIZE_INTRO)
-    }
-    
-    
-    static var primary: UIFont {
-        return custom("AvenirNextCyr-Regular", size: Constants.PRIMARY_TEXT_SIZE)
-    }
     
     static var button: UIFont {
-        return custom("AvenirNextCyr-Medium", size: Constants.BUTTON_TEXT_SIZE)
+        return UIFont.systemFont(ofSize: Constants.BUTTON_TEXT_SIZE, weight: .regular)
+    }
+    
+    static var detail: UIFont {
+        return UIFont.systemFont(ofSize: Constants.DETAIL_TEXT_SIZE, weight: .regular)
     }
 }

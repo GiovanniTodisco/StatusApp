@@ -110,12 +110,19 @@ extension OnboardingViewController: ORKTaskViewControllerDelegate {
                     let firstNameResult = personalDataResult.result(forIdentifier: "firstName") as? ORKTextQuestionResult
                     let lastNameResult = personalDataResult.result(forIdentifier: "lastName") as? ORKTextQuestionResult
                     let birthDateResult = personalDataResult.result(forIdentifier: "birthDate") as? ORKDateQuestionResult
+                    let heightResult = personalDataResult.result(forIdentifier: "height") as? ORKNumericQuestionResult
+                    let weightResult = personalDataResult.result(forIdentifier: "weight") as? ORKNumericQuestionResult
                     
                     if let firstName = firstNameResult?.textAnswer?.trimmingCharacters(in: .whitespacesAndNewlines),
                        let lastName = lastNameResult?.textAnswer?.trimmingCharacters(in: .whitespacesAndNewlines),
-                       let birthDate = birthDateResult?.dateAnswer {
-                        let profile = UserProfile(firstName: firstName, lastName: lastName, birthDate: birthDate)
+                       let birthDate = birthDateResult?.dateAnswer,
+                       let height = heightResult?.numericAnswer?.stringValue,
+                       let weight = weightResult?.numericAnswer?.stringValue {
+                        print("Dati raccolti - Nome: \(firstName), Cognome: \(lastName), Data di nascita: \(birthDate), Altezza: \(height), Peso: \(weight)")
+                        let profile = UserProfile(firstName: firstName, lastName: lastName, birthDate: birthDate, height: height, weight: weight)
                         profile.save()
+                        print("Profilo utente salvato correttamente")
+                        _ = UIDevice.appUserID
                     }
                     
                     self.hasFinishedOnboarding = true

@@ -22,6 +22,9 @@ class HomeViewController: UIViewController, Loadable {
     func loadData() async throws {
         let healthKitManager = HealthKitManager.shared
         healthDataItems = try await healthKitManager.fetchLatestHealthData()
+        var _: [HealthMetricData] = healthDataItems.map {
+            HealthMetricData(metric: $0.metric, values: [MetricValue(date: $0.date, value: $0.value)])
+        }
         DispatchQueue.main.async {
             self.homeView.update(with: self.healthDataItems)
         }
@@ -37,6 +40,20 @@ class HomeViewController: UIViewController, Loadable {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Home"
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Task {
+            let healthKitManager = HealthKitManager.shared
+            let latestItems = try? await healthKitManager.fetchLatestHealthData()
+            if let items = latestItems {
+                let mapped = items.map {
+                    HealthMetricData(metric: $0.metric, values: [MetricValue(date: $0.date, value: $0.value)])
+                }
+                HealthDataSyncService.shared.uploadAlways(metrics: mapped)
+            }
+        }
     }
 }
 

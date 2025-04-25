@@ -29,7 +29,7 @@ class CustomConsentInfoStepViewController: ORKStepViewController {
         
         let pageTitleLabel = UILabel()
         pageTitleLabel.text = NSLocalizedString("consent_intro_title", comment: "")
-        pageTitleLabel.font = AppFont.titleIntro
+        pageTitleLabel.font = AppFont.welcome
         pageTitleLabel.textAlignment = .center
         pageTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(pageTitleLabel)
@@ -46,7 +46,7 @@ class CustomConsentInfoStepViewController: ORKStepViewController {
 
         let contentView = UIStackView()
         contentView.axis = .vertical
-        contentView.spacing = 20
+        contentView.spacing = 12
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
         
@@ -75,7 +75,7 @@ class CustomConsentInfoStepViewController: ORKStepViewController {
 
             let descriptionLabel = UILabel()
             descriptionLabel.text = text
-            descriptionLabel.font = AppFont.description
+            descriptionLabel.font = AppFont.detail
             descriptionLabel.numberOfLines = 0
 
             contentView.addArrangedSubview(titleLabel)

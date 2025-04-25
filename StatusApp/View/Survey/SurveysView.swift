@@ -22,14 +22,30 @@ class SurveysView: UIView, UICollectionViewDelegate, UICollectionViewDataSource 
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "In questa sezione puoi visualizzare lo stato dei sondaggi giornalieri completati o mancati negli ultimi 7 giorni, insieme al tuo umore ed energia. Completare regolarmente i sondaggi aiuta a monitorare il tuo benessere nel tempo."
+        label.text = NSLocalizedString("survey_intro", comment: "")
         label.numberOfLines = 0
-        label.font = AppFont.info
+        label.font = AppFont.description
         label.textColor = AppColor.primaryText
         return label
     }()
     
-    let seeAllButton = UIButton(type: .system)
+    let seeAllButton: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.title = NSLocalizedString("see_last_90", comment: "")
+        config.image = UIImage(systemName: "magnifyingglass")
+        config.imagePadding = 8
+        config.imagePlacement = .leading
+
+        config.baseForegroundColor = AppColor.primaryIcon
+        config.baseBackgroundColor = .clear
+        config.cornerStyle = .medium 
+
+        let btn = UIButton(configuration: config)
+        btn.titleLabel?.font = AppFont.button
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
     var onSeeAllTapped: (() -> Void)?
 
     override init(frame: CGRect) {

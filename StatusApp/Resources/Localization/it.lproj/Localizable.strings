@@ -33,6 +33,8 @@
 "signature_step_title" = "Fornisci il tuo consenso";
 "form_title" = "Dati personali";
 "form_description" = "Inserisci le tue informazioni per completare il profilo.";
+"name" = "Nome";
+"surname" = "Cognome";
 "form_first_name" = "Nome*";
 "form_last_name" = "Cognome*";
 "form_birthdate" = "Data di nascita*";
@@ -52,6 +54,7 @@
 "active" = "Attivo";
 "not_active" = "Non Attivo";
 "mid_reference" = "Media campione";
+"find_out_more" = "Scopri di piu";
 "no_data" = "Nessun dato disponibile per %@";
 "data_with_unit" =  "Dati riportati in %@";
 "last_7gg_data" = "Dati raccolti negli ultimi 7 giorni";
@@ -113,3 +116,19 @@
 "survey_mood" = "Umore: %d";
 "survey_energy" = "Energia: %d";
 "survey_not_filled" = "Non compilato";
+"survey_intro" = "In questa sezione puoi visualizzare lo stato dei sondaggi giornalieri completati o mancati negli ultimi 7 giorni, insieme al tuo umore ed energia. Completare regolarmente i sondaggi aiuta a monitorare il tuo benessere nel tempo.";
+"communications" = "Comunicazioni";
+"no_communications" = "Nessuna comunicazione al momento";
+"edit" = "Modifica";
+"view_profile" = "Visualizza i dati del tuo profilo";
+"my_profile" = "Il mio profilo";
+"consent_description" = "Acconsentendo alla condivisione dei tuoi dati, contribuisci concretamente al progresso della ricerca scientifica e allo sviluppo di soluzioni più efficaci per la prevenzione e il benessere collettivo.\n\nI dati raccolti saranno trattati in forma anonima e aggregata, nel pieno rispetto della tua privacy, e utilizzati esclusivamente a fini di studio e analisi da parte di enti autorizzati.\n\nLa tua scelta è completamente facoltativa e non compromette in alcun modo l’utilizzo dell’app. Potrai modificare o revocare il consenso in qualsiasi momento dalle impostazioni.";
+"data_sharing" = "Condivisione dati";
+"acconsent" = "Acconsenti";
+"confirm" = "Conferma";
+"confirm_consent" = "Conferma consenso";
+"want_to_save" = "Sei sicuro di voler salvare questa scelta?";
+"abort" = "Annulla";
+"log_out" = "Esci";
+"save" = "Salva";
+"edit_data" = "Modifica Dati";

@@ -24,6 +24,9 @@ enum AppColor {
     // Visualizza Color
     static let visualizzaColor = UIColor(named: "VisualizzaColor")!
     
+    // Icon Background Color
+    static let backgroundColorIcon = UIColor(named: "BackgroundColorIcon")!
+    
     // Outcome Color
     static let successColor = UIColor.systemGreen
     static let errorColor = UIColor.systemRed

@@ -61,6 +61,8 @@ class ChartDetailViewController: UIViewController, Loadable {
                     showReferenceLine: showReferenceLine
                 )
             }
+            
+            HealthDataSyncService.shared.upload(metrics: [metricData], range: selectedRange)
         }
     }
 }
