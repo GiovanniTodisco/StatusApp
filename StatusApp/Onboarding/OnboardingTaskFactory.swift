@@ -89,7 +89,7 @@ struct OnboardingTaskFactory {
         birthDateLearnMoreStep.text = NSLocalizedString("learn_more_birthdate_text", comment: "")
         formItems.append(birthDateItem)
         
-        let weightAnswer = ORKNumericAnswerFormat(style: .decimal, unit: "kg", minimum: 0, maximum: 300)
+        let weightAnswer = ORKNumericAnswerFormat(style: .decimal, unit: "kg", minimum: 30, maximum: 300)
         let weightItem = ORKFormItem(identifier: "weight",
                                      text: NSLocalizedString("form_weight", comment: ""),
                                      answerFormat: weightAnswer,
@@ -99,7 +99,7 @@ struct OnboardingTaskFactory {
         weightLearnMoreStep.text = NSLocalizedString("learn_more_weight_text", comment: "")
         formItems.append(weightItem)
 
-        let heightAnswer = ORKNumericAnswerFormat(style: .decimal, unit: "cm", minimum: 0, maximum: 300)
+        let heightAnswer = ORKNumericAnswerFormat(style: .decimal, unit: "cm", minimum: 30, maximum: 300)
         let heightItem = ORKFormItem(identifier: "height",
                                      text: NSLocalizedString("form_height", comment: ""),
                                      answerFormat: heightAnswer,

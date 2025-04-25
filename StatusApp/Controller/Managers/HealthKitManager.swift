@@ -13,44 +13,47 @@ class HealthKitManager {
 
     func requestAuthorization() async throws -> Bool {
         guard HKHealthStore.isHealthDataAvailable() else {
+            print("Health data non disponibile")
             return false
         }
 
-        let allTypes: Set<HKSampleType> = [
-            HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
-            HKObjectType.quantityType(forIdentifier: .stepCount)!,
-            HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-            HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-            HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
-            HKObjectType.categoryType(forIdentifier: .mindfulSession)!
+        let allMetrics: [(metric: HealthMetric, type: HKSampleType)] = [
+            (.frequenzaCardiaca, HKObjectType.quantityType(forIdentifier: .heartRate)!),
+            (.hrv, HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!),
+            (.passi, HKObjectType.quantityType(forIdentifier: .stepCount)!),
+            (.distanza, HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!),
+            (.energiaAttiva, HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!),
+            (.sonno, HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!),
+            (.mindful, HKObjectType.categoryType(forIdentifier: .mindfulSession)!)
         ]
 
-        try await healthStore.requestAuthorization(toShare: allTypes, read: allTypes)
+        let typesToRead = Set(allMetrics.map { $0.type })
+        try await healthStore.requestAuthorization(toShare: [], read: typesToRead)
+        print("Richiesta autorizzazioni completata")
 
-        // Crea mappa tra metrica e tipo
-        let metricToType: [HealthMetric: HKObjectType] = [
-            .frequenzaCardiaca: HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            .hrv: HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
-            .passi: HKObjectType.quantityType(forIdentifier: .stepCount)!,
-            .distanza: HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-            .energiaAttiva: HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-            .sonno: HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
-            .mindful: HKObjectType.categoryType(forIdentifier: .mindfulSession)!
-        ]
+        var authorizedMetrics: [String] = []
 
-        let authorizedMetrics = metricToType.compactMap { (metric, type) -> String? in
-            let status: HKAuthorizationStatus
-            if let quantity = type as? HKQuantityType {
-                status = healthStore.authorizationStatus(for: quantity)
-            } else if let category = type as? HKCategoryType {
-                status = healthStore.authorizationStatus(for: category)
-            } else {
-                return nil
+        for (metric, type) in allMetrics {
+            do {
+                if let quantityType = type as? HKQuantityType {
+                    let sample = try await fetchMostRecentQuantitySample(for: HKQuantityTypeIdentifier(rawValue: quantityType.identifier))
+                    if sample != nil {
+                        print("Metrica autorizzata (dati disponibili): \(metric.rawValue)")
+                        authorizedMetrics.append(metric.rawValue)
+                    }
+                } else if let categoryType = type as? HKCategoryType {
+                    let sample = try await fetchMostRecentCategorySample(for: HKCategoryTypeIdentifier(rawValue: categoryType.identifier))
+                    if sample != nil {
+                        print("Metrica autorizzata (dati disponibili): \(metric.rawValue)")
+                        authorizedMetrics.append(metric.rawValue)
+                    }
+                }
+            } catch {
+                print("Errore lettura per \(metric.rawValue): \(error)")
             }
-
-            return status == .sharingAuthorized ? metric.rawValue : nil
         }
+
+        print("Metriche autorizzate dall'utente (con dati): \(authorizedMetrics)")
 
         let currentPrefs = ChartsPreferencesManager.load()
         let updatedPrefs = ChartsPreferences(
@@ -58,6 +61,7 @@ class HealthKitManager {
             selectedTimeRange: currentPrefs.selectedTimeRange
         )
         ChartsPreferencesManager.save(updatedPrefs)
+        print("Preferenze aggiornate con metriche: \(updatedPrefs.selectedMetrics)")
 
         return !authorizedMetrics.isEmpty
     }

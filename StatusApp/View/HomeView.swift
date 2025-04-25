@@ -72,8 +72,7 @@ class HomeView: UIView {
         // 3) Welcome label
         if let profile = UserProfile.load() {
             welcomeLabel.text = String(format: NSLocalizedString("welcome", comment: ""),
-                                      profile.firstName,
-                                      profile.lastName)
+                                      profile.firstName)
         } else {
             welcomeLabel.text = NSLocalizedString("welcome", comment: "")
         }

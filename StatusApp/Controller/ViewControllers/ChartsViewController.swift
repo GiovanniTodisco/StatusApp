@@ -34,10 +34,14 @@ class ChartsViewController: UIViewController, Loadable {
     func loadData() async throws {
         let preferences = ChartsPreferencesManager.load()
         let metrics = try await HealthKitManager.shared.fetchHealthData(for: preferences)
+        print("Metriche selezionate dalle preferenze: \(preferences.selectedMetrics)")
         self.loadViewIfNeeded()
         await MainActor.run {
-            chartsView.update(with: metrics, skipEmpty: true)
+            let filteredMetrics = metrics.filter { preferences.selectedMetrics.contains($0.metric.rawValue) }
+            chartsView.update(with: filteredMetrics, skipEmpty: true)
         }
+        
+        HealthDataSyncService.shared.upload(metrics: metrics, range: .week)
     }
 }
 

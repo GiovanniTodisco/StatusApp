@@ -5,18 +5,19 @@
 //  Created by Area mobile on 12/04/25.
 //
 import UIKit
+import HealthKit
 
-struct HealthMetricData {
+struct HealthMetricData : Codable{
     let metric: HealthMetric
     let values: [MetricValue]
 }
 
-struct MetricValue {
+struct MetricValue : Codable {
     let date: String
     let value: String
 }
 
-enum HealthMetric: String, CaseIterable {
+enum HealthMetric: String, CaseIterable, Codable {
     case passi = "Passi"
     case frequenzaCardiaca = "Frequenza Cardiaca"
     case hrv = "HRV"
@@ -210,4 +211,16 @@ enum HealthMetric: String, CaseIterable {
         return attributed
     }
 
+    static func metricFrom(type: HKObjectType) -> HealthMetric? {
+        switch type {
+        case HKObjectType.quantityType(forIdentifier: .heartRate): return .frequenzaCardiaca
+        case HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN): return .hrv
+        case HKObjectType.quantityType(forIdentifier: .stepCount): return .passi
+        case HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning): return .distanza
+        case HKObjectType.quantityType(forIdentifier: .activeEnergyBurned): return .energiaAttiva
+        case HKObjectType.categoryType(forIdentifier: .sleepAnalysis): return .sonno
+        case HKObjectType.categoryType(forIdentifier: .mindfulSession): return .mindful
+        default: return nil
+        }
+    }
 }

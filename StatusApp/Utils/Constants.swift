@@ -13,6 +13,7 @@ struct Constants {
     static let USER_PROFILE_KEY = "userProfile"
     static let HEALTHKIT_PERMISSION_KEY = "healthKitPermissionGranted"
     static let CHARTS_PREFERENCES = "chartsPreferences"
+    static let USER_UUID = "userAppID"
     
     /**
      Section for size
@@ -21,6 +22,7 @@ struct Constants {
     static let TITLE_SIZE: CGFloat = 24
     static let DESCRIPTION_TEXT_SIZE: CGFloat = 18
     static let CAMPIONE_TEXT_SIZE: CGFloat = 12
+    static let DETAIL_TEXT_SIZE: CGFloat = 14
     static let WELCOME_SIZE: CGFloat = 32
     
     static let BUTTON_TEXT_SIZE: CGFloat = 18
@@ -33,4 +35,10 @@ struct Constants {
     
     static let APP_MARGIN: CGFloat = 20
     
+    /**
+     Section for time range
+     */
+    static let TIME_RANGE_ONE_MINUTE = 60
+    static let TIME_RANGE_ONE_DAY = 86400
+    static let TIME_RANGE_ONE_WEEK = 604800
 }

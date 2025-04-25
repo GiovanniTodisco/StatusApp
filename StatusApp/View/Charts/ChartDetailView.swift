@@ -35,8 +35,8 @@ class ChartDetailView: UIView {
 
     private let infoButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("Scopri di più", for: .normal)
-        btn.titleLabel?.font = AppFont.primary
+        btn.setTitle(NSLocalizedString("find_out_more", comment: ""), for: .normal)
+        btn.titleLabel?.font = AppFont.button
         btn.setTitleColor(AppColor.primaryText, for: .normal)
         btn.backgroundColor = AppColor.primaryIcon
         btn.layer.cornerRadius = 10
